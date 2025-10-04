@@ -1,11 +1,15 @@
 <script setup>
 
+import Navbar from "@/pages/Navbar.vue";
+import HomePage from "@/pages/HomePage.vue";
 </script>
 
 <template>
-<router-view>
+  <navbar></navbar>
+  <router-view>
 
-</router-view>
+  </router-view>
+
 </template>
 
 <style scoped>

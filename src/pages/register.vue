@@ -1,26 +1,37 @@
 <script setup>
 import {ref} from "vue";
 import authStore from "@/store/authStore.js";
+import Navbar from "@/pages/Navbar.vue";
+import {useRouter} from "vue-router";
 
+const router = useRouter();
 const name = ref();
 const email = ref();
 const password = ref();
 const password_confirm = ref();
 
 const useStore = authStore();
+const errors = ref([]);
+
 
 const register = async()=>{
-  const success = await authStore.register({
+  const success = await useStore.register({
     name:name.value,
     email:email.value,
     password:password.value,
     password_confirmation:password_confirm.value,
   });
+  if(success){
+    setTimeout(()=>{
+      router.push("/login");
+    },2000)
+  }
 }
 
 </script>
 
 <template>
+<!--  <navbar></navbar>-->
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-10 col-lg-10 center-screen">

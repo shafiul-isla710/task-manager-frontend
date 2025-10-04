@@ -10,22 +10,28 @@ const useStore  = defineStore("authStore", ()=>{
 
     async function register(credential){
         try{
-            const res = await axiosClient.post("api/register",credential)
+            const res = await axiosClient.post("auth/register",credential)
             cogoToast.success(res.data.message);
             return true
         }
         catch(error){
-            if(error.response.status === 422){
-                const errorMsg = error.response.data.message;
+            if(error.status === 422){
+                let errors = ref([]);
+                const errorMsg = error.response.data.messages;
                 errorMsg.forEach((msg)=>{
+                    errors.push(msg)
                     cogoToast.error((msg),{
                         position:"top-right",
                         size:"small",
                     })
                 })
+                return errors;
             }
             else{
-                cogoToast.error('something went wrong');
+                cogoToast.error('something went wrong',{
+                    position:"top-right",
+                    size:"small",
+                });
             }
         return false;
         }
@@ -34,7 +40,8 @@ const useStore  = defineStore("authStore", ()=>{
 
     return{
         user,
-        token
+        token,
+        register,
     }
 })
 
