@@ -1,8 +1,10 @@
 <script setup>
 
+import Navbar from "@/pages/Navbar.vue";
 </script>
 
 <template>
+  <navbar></navbar>
   <!-- Hero Section -->
   <section id="hero" class="hero section dark-background">
 

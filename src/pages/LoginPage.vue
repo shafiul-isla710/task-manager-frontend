@@ -1,8 +1,32 @@
 <script setup>
 
+import {ref} from "vue";
+import {useRouter} from "vue-router";
+import authStore from "@/store/authStore.js";
+import Navbar from "@/pages/Navbar.vue";
+
+const router = useRouter();
+const email = ref('')
+const password = ref('')
+
+const useStore = authStore()
+
+const login = async ()=>{
+  const success = await useStore.login({
+    "email": email.value,
+    "password": password.value
+  })
+  if(success === true ){
+    setTimeout(()=>{
+      router.push("/dashboard")
+    },2000)
+  }
+}
+
 </script>
 
 <template>
+  <navbar></navbar>
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-7 col-lg-6 center-screen">

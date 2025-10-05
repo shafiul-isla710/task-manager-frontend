@@ -1,8 +1,8 @@
 <script setup>
 import {ref} from "vue";
 import authStore from "@/store/authStore.js";
-import Navbar from "@/pages/Navbar.vue";
 import {useRouter} from "vue-router";
+import Navbar from "@/pages/Navbar.vue";
 
 const router = useRouter();
 const name = ref();
@@ -21,7 +21,7 @@ const register = async()=>{
     password:password.value,
     password_confirmation:password_confirm.value,
   });
-  if(success){
+  if(success === true){
     setTimeout(()=>{
       router.push("/login");
     },2000)
@@ -31,6 +31,7 @@ const register = async()=>{
 </script>
 
 <template>
+  <navbar></navbar>
 <!--  <navbar></navbar>-->
   <div class="container">
     <div class="row justify-content-center">
@@ -92,6 +93,7 @@ const register = async()=>{
                     >
                       Sign Up
                     </button>
+                    <router-link to="/login">Already have an account</router-link>
                   </div>
                 </div>
               </form>

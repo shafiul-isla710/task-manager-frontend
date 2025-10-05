@@ -3,6 +3,8 @@ import { createWebHistory, createRouter } from 'vue-router'
 import Register from "@/pages/register.vue";
 import HomePage from "@/pages/HomePage.vue";
 import LoginPage from "@/pages/LoginPage.vue";
+import MasterLayout from "@/layout/MasterLayout.vue";
+import Dashboard from "@/pages/Dashboard.vue";
 
 const routes = [
     {
@@ -19,6 +21,18 @@ const routes = [
         path: '/login',
         name:'login',
         component:LoginPage,
+    },
+    {
+        path:'/',
+        component: MasterLayout,
+        children:[
+            {
+                path:'/dashboard',
+                name:'dashboard',
+                component:Dashboard,
+                meta: { requiresAuth: true },
+            }
+        ]
     }
 ]
 

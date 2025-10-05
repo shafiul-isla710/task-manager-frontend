@@ -3,7 +3,9 @@
 @import "./assets/css/sidebar.css";
 @import "./assets/css/dropdownmenu.css";
 @import "./assets/css/swiper-bundle.min.css";
-/*@import "./assets/css/bootstrap.min.css";*/
-@import "./assets/css/bootstrap-icons.min.css";
+@import "./assets/css/bootstrap.min.css";
+/*@import "./assets/css/bootstrap-icons.min.css";*/
 @import "./assets/css/glightbox.min.css";
 @import "./assets/css/main.css";
+
+/*@import "./assets/js/main.js";*/
