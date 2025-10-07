@@ -5,6 +5,8 @@ import HomePage from "@/pages/HomePage.vue";
 import LoginPage from "@/pages/LoginPage.vue";
 import MasterLayout from "@/layout/MasterLayout.vue";
 import Dashboard from "@/pages/Dashboard.vue";
+import TaskList from "@/pages/TaskList.vue";
+import TaskCreate from "@/pages/TaskCreate.vue";
 
 const routes = [
     {
@@ -30,6 +32,18 @@ const routes = [
                 path:'/dashboard',
                 name:'dashboard',
                 component:Dashboard,
+                meta: { requiresAuth: true },
+            },
+            {
+                path:'/TaskList',
+                name:'TaskList',
+                component:TaskList,
+                meta: { requiresAuth: true },
+            },
+            {
+                path:'/TaskCreate',
+                name:'TaskCreate',
+                component:TaskCreate,
                 meta: { requiresAuth: true },
             }
         ]

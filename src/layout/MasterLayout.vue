@@ -59,10 +59,10 @@ import useStore from "@/store/authStore.js";
       <i class="bi bi-speedometer2 side-bar-item-icon"></i>
       <span>Dashboard</span>
     </a>
-    <a  class="side-bar-item mt-2 text-black">
+    <router-link :to="{name:'TaskList'}"  class="side-bar-item mt-2 text-black">
       <i class="bi bi-pencil-square side-bar-item-icon"></i>
       <span>Tasks</span>
-    </a>
+    </router-link>
     <a href="/All" class="side-bar-item mt-2 text-black">
       <i class="bi bi-list-ul side-bar-item-icon"></i>
       <span>New Task</span>
