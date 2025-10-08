@@ -6,7 +6,7 @@ import LoginPage from "@/pages/LoginPage.vue";
 import MasterLayout from "@/layout/MasterLayout.vue";
 import Dashboard from "@/pages/Dashboard.vue";
 import TaskList from "@/pages/TaskList.vue";
-import TaskCreate from "@/pages/TaskCreate.vue";
+import TaskCreate from "@/pages/task-create-form.vue";
 
 const routes = [
     {
@@ -43,6 +43,12 @@ const routes = [
             {
                 path:'/TaskCreate',
                 name:'TaskCreate',
+                component:TaskCreate,
+                meta: { requiresAuth: true },
+            },
+            {
+                path:'/TaskCreate/:id/edit',
+                name:'TaskEdit',
                 component:TaskCreate,
                 meta: { requiresAuth: true },
             }

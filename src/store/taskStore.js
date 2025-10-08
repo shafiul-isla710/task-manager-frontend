@@ -33,6 +33,48 @@ const taskStore = defineStore('taskStore', ()=>{
             return true;
         }
         catch(error){
+            if(error.status === 422){
+                const errors = error.response.data.messages
+                return errors;
+            }
+            cogoToast.error('Something went wrong',{
+                position:"top-right",
+                size:"small",
+            })
+            return false;
+        }
+    }
+    async function updateTask(id,credentials){
+            try{
+                const res = await axiosClient.put(`tasks/${id}`,credentials )
+                cogoToast.success(res.data.message,{
+                    position:"top-right",
+                    size:"small",
+                })
+                return true;
+            }
+            catch(error){
+                if(error.status === 422){
+                    const errors = error.response.data.messages
+                    return errors;
+                }
+                cogoToast.error('Something went wrong',{
+                    position:"top-right",
+                    size:"small",
+                })
+                return false;
+            }
+    }
+
+    async function deleteTask(id){
+        try{
+            const res = await axiosClient.delete(`tasks/${id}`);
+            cogoToast.success(res.data.message,{
+                position:"top-right",
+                size:"small",
+            })
+        }
+        catch(error){
             cogoToast.error('Something went wrong',{
                 position:"top-right",
                 size:"small",
@@ -44,6 +86,8 @@ const taskStore = defineStore('taskStore', ()=>{
     return {
         fetchTasks,
         createTask,
+        updateTask,
+        deleteTask
     }
 })
 

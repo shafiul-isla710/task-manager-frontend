@@ -14,25 +14,22 @@ const useStore = authStore();
 const errors = ref([]);
 
 
-const register = async()=>{
+const register = async()=> {
   const success = await useStore.register({
-    name:name.value,
-    email:email.value,
-    password:password.value,
-    password_confirmation:password_confirm.value,
+    name: name.value,
+    email: email.value,
+    password: password.value,
+    password_confirmation: password_confirm.value,
   });
-  if(success === true){
-    setTimeout(()=>{
+  if (success === true) {
+    setTimeout(() => {
       router.push("/login");
-    },2000)
+    }, 2000)
   }
 }
-
 </script>
-
 <template>
   <navbar></navbar>
-<!--  <navbar></navbar>-->
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-10 col-lg-10 center-screen">

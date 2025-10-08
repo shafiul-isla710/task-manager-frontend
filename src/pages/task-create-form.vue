@@ -1,21 +1,54 @@
 <script setup>
-import {ref} from "vue";
+import axiosClient from "@/services/axiosClient.js";
+import {onMounted, ref} from "vue";
 import taskStore from "@/store/taskStore.js";
-import {useRouter} from "vue-router";
+import {useRouter,useRoute} from "vue-router";
+import axios from "axios";
 
 const router = useRouter()
+const route = useRoute()
 
+const isEdit = ref(false);
 const title = ref()
 const description = ref()
-const createTask = async () => {
-  const result = await taskStore().createTask({
-    title: title.value,
-    description: description.value,
-  })
-  if(result){
-    setTimeout(()=>{
-      router.push('/TaskList')
-    },1000)
+const errorMessage = ref()
+
+onMounted(async () =>{
+  if(route.params.id){
+    isEdit.value = true
+    const res = await axiosClient.get(`/tasks/${route.params.id}`)
+    title.value = res.data.data.title
+    description.value = res.data.data.description
+  }
+})
+
+const createOrUpdate = async () => {
+
+  if(route.params.id){
+      const result = await taskStore().updateTask(route.params.id, {
+        title: title.value,
+        description: description.value,
+      })
+      if(result === true){
+        setTimeout(()=>{
+          router.push("/TaskList")
+        },1000)
+      }else{
+        errorMessage.value = result
+      }
+  }
+  else{
+      const result = await taskStore().createTask({
+        title: title.value,
+        description: description.value,
+      })
+      if(result === true){
+        setTimeout(()=>{
+          router.push('/TaskList')
+        },1000)
+      }else{
+        errorMessage.value = result
+      }
   }
 }
 
@@ -28,7 +61,7 @@ const createTask = async () => {
         <div class="col-md-12">
           <div class="w-90 p-4">
             <div class="d-flex justify-content-between align-items-center">
-              <h4>Task Create</h4>
+              <h4>{{isEdit?'Edit Task':'Task Create'}}</h4>
               <RouterLink :to="{ name: 'TaskList'}" class="btn btn-sm btn-primary">All Tasks</RouterLink>
             </div>
           </div>
@@ -44,6 +77,9 @@ const createTask = async () => {
                       name="title"
                       v-model="title"
                   />
+                  <span v-if="errorMessage" class="text-danger">
+                    {{errorMessage[0]}}
+                  </span>
                 </div>
                 <div class="col-md-6">
                   <label for="description">Descriptions</label>
@@ -56,8 +92,8 @@ const createTask = async () => {
                 </textarea>
                 </div>
               </div>
-              <button @click.prevent="createTask" class="btn w-20 mt-2 animated fadeInUp float-start btn-primary">
-                Add Task
+              <button @click.prevent="createOrUpdate" class="btn w-20 mt-2 animated fadeInUp float-start btn-primary">
+                {{isEdit?'Save Change':'Save'}}
               </button>
             </form>
           </div>

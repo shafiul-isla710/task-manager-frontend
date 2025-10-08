@@ -1,6 +1,7 @@
 <script setup>
 import {onMounted, ref} from "vue";
 import taskStore from "@/store/taskStore.js";
+import Swal from "sweetalert2";
 
 
 const tasks = ref([]);
@@ -9,6 +10,20 @@ const taskList = async () =>{
    const result = await taskStore().fetchTasks();
    tasks.value = result
   console.log(result)
+}
+const deleteTask = async (id) =>{
+
+  const result = await Swal.fire({
+    title: "Are you sure?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+  })
+  if(result.isConfirmed){
+    await taskStore().deleteTask(id)
+    taskList()
+  }
 }
 
 onMounted(taskList);
@@ -40,8 +55,8 @@ onMounted(taskList);
                 <td>{{ task.title }}</td>
                 <td>{{ task.description }}</td>
                 <td class="text-right d-flex flex-row gap-3">
-                  <router-link  class="bg-success text-white p-2 border-0 rounded">Edit</router-link>
-                  <span class="bg-danger text-white p-2 border-0 rounded">Delete</span>
+                  <router-link :to="{name:'TaskEdit',params:{id:task.id}}" class="bg-success text-white p-2 border-0 rounded">Edit</router-link>
+                  <button @click.prevent="deleteTask(task.id)" class="bg-danger text-white p-2 border-0 rounded">Delete</button>
                 </td>
               </tr>
             </tbody>
