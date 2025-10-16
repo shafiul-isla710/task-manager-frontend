@@ -3,14 +3,19 @@ import {onMounted, ref} from "vue";
 import taskStore from "@/store/taskStore.js";
 import Swal from "sweetalert2";
 
-
-const tasks = ref([]);
+const tasks = ref([])
+const pagination = ref({})
+const currentPage = ref(1)
 
 const taskList = async () =>{
    const result = await taskStore().fetchTasks();
-   tasks.value = result
-  console.log(result)
+   // console.log(result.data.data.first_page_url)
+   tasks.value = result.data.data.data
+   pagination.value = result.data.data;
+   currentPage.value = page
 }
+console.log(pagination.value)
+
 const deleteTask = async (id) =>{
 
   const result = await Swal.fire({
@@ -51,7 +56,7 @@ onMounted(taskList);
             </tr>
             </thead>
             <tbody>
-              <tr v-for="task in tasks" :key="task.id">
+              <tr v-for="(task,index) in tasks" :key="index">
                 <td>{{ task.title }}</td>
                 <td>{{ task.description }}</td>
                 <td class="text-right d-flex flex-row gap-3">

@@ -1,8 +1,6 @@
 import {ref} from "vue";
 import axiosClient from "@/services/axiosClient.js";
 import {defineStore} from "pinia";
-
-
 import cogoToast from "cogo-toast";
 import {useRoute, useRouter} from "vue-router";
 

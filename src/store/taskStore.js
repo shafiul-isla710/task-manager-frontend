@@ -7,10 +7,11 @@ import {useRoute, useRouter} from "vue-router";
 
 const taskStore = defineStore('taskStore', ()=>{
 
-    async function fetchTasks() {
+    async function fetchTasks(page = 1) {
         try{
-            const res = await axiosClient.get("/tasks");
-            return res.data.data ? res.data.data : [];
+            const res = await axiosClient.get(`tasks?page=${page}`);
+
+            return res;
 
         }
         catch(error) {
