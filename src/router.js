@@ -7,6 +7,9 @@ import MasterLayout from "@/layout/MasterLayout.vue";
 import Dashboard from "@/pages/Dashboard.vue";
 import TaskList from "@/pages/TaskList.vue";
 import TaskCreate from "@/pages/task-create-form.vue";
+import group from "@/pages/group/group.vue";
+import form from "@/pages/group/form.vue";
+
 
 const routes = [
     {
@@ -51,7 +54,24 @@ const routes = [
                 name:'TaskEdit',
                 component:TaskCreate,
                 meta: { requiresAuth: true },
-            }
+            },
+            {
+                path:'/groups',
+                name:'groups',
+                component:group,
+                meta: { requiresAuth: true },
+            },
+            {
+                path:'/form',
+                name:'createForm',
+                component:form,
+                meta: { requiresAuth: true },
+            },{
+                path:'/form/:id/edit',
+                name:'editForm',
+                component:form,
+                meta: { requiresAuth: true },
+            },
         ]
     }
 ]

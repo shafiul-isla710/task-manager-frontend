@@ -63,10 +63,10 @@ import useStore from "@/store/authStore.js";
       <i class="bi bi-pencil-square side-bar-item-icon"></i>
       <span>Tasks</span>
     </router-link>
-    <a href="/All" class="side-bar-item mt-2 text-black">
+    <router-link :to="{name:'groups'}"  class="side-bar-item mt-2 text-black">
       <i class="bi bi-list-ul side-bar-item-icon"></i>
-      <span>New Task</span>
-    </a>
+      <span>Groups</span>
+    </router-link>
     <a href="/Progress" class="side-bar-item mt-2 text-black">
       <i class="bi bi-hourglass-split side-bar-item-icon"></i>
       <span>In Progress</span>
