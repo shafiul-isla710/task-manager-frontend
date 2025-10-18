@@ -5,6 +5,7 @@ import groupStore from "@/store/groupStore.js";
 import {useRouter,useRoute} from 'vue-router'
 const name = ref("");
 const title = ref("");
+const status = ref("");
 
 const router = useRouter()
 const route = useRoute()
@@ -12,15 +13,19 @@ const store = groupStore()
 const errorMessage = ref('')
 const isEdit = ref(false)
 
+
 onMounted(async()=>{
+
   if(route.params.id){
     isEdit.value = true
 
     const res = await axiosClient.get(`groups/${route.params.id}`)
     name.value = res.data.data.name
     title.value = res.data.data.title
+    status.value = res.data.data.status
   }
 })
+
 
 // Create or Update method ,, if Params exits id group will be update otherwise create group
 const createOrUpdate = async () => {
@@ -28,6 +33,7 @@ const createOrUpdate = async () => {
     const result = await store.updateGroup(route.params.id ,{
       name : name.value,
       title : title.value,
+      status : status.value,
     })
     if(result === true){
       setTimeout(()=>{
@@ -63,10 +69,14 @@ const createOrUpdate = async () => {
               <h4>{{isEdit?'Edit Group':'Group Create'}}</h4>
               <router-link :to="{name:'groups'}" class="btn btn-sm btn-primary">Groups</router-link>
             </div>
+            <div v-if="errorMessage" class="w-16 col-md-4 offset-md-8" v-for="(message,index) in errorMessage" :key="index">
+              <p class="alert alert-danger text-white" >{{message}}</p>
+            </div>
           </div>
           <div class="w-90 p-4">
             <form class="">
-              <div class="row justify-content-center">
+              <div class="row">
+
                 <div class="col-md-6 mb-3">
                   <label for="title">Name</label>
                   <input
@@ -75,18 +85,24 @@ const createOrUpdate = async () => {
                       type="text"
                       v-model="name"
                   />
-                  <span v-if="errorMessage" class="text-danger">
-                    {{errorMessage[0]}}
-                  </span>
+<!--                  <p>{{status}}</p>-->
+
                 </div>
                 <div class="col-md-6">
                   <label for="description">Title</label>
                   <textarea
-                      placeholder="Group Title"
-                      class="form-control"
-                      v-model="title"
-                  >
-                </textarea>
+                        placeholder="Group Title"
+                        class="form-control"
+                        v-model="title"
+                    >
+                  </textarea>
+                </div>
+                <div v-show="isEdit" class="col-md-3 mb-3">
+                  <label>Status</label>
+                  <select name="status" id="status" v-model="status"  class="form-select" aria-label="Default select example">
+                    <option :value="1">Active</option>
+                    <option :value="0">Inactive</option>
+                  </select>
                 </div>
               </div>
               <div class="d-flex flex-row align-items-center gap-5">
