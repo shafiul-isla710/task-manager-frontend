@@ -9,6 +9,8 @@ import TaskList from "@/pages/TaskList.vue";
 import TaskCreate from "@/pages/task-create-form.vue";
 import group from "@/pages/group/group.vue";
 import form from "@/pages/group/form.vue";
+import MemberList from "@/pages/member/memberList.vue";
+
 
 
 const routes = [
@@ -35,6 +37,12 @@ const routes = [
                 path:'/dashboard',
                 name:'dashboard',
                 component:Dashboard,
+                meta: { requiresAuth: true },
+            },
+            {
+                path:'/member',
+                name:'memberList',
+                component:MemberList,
                 meta: { requiresAuth: true },
             },
             {
@@ -66,7 +74,8 @@ const routes = [
                 name:'createForm',
                 component:form,
                 meta: { requiresAuth: true },
-            },{
+            },
+            {
                 path:'/form/:id/edit',
                 name:'editForm',
                 component:form,

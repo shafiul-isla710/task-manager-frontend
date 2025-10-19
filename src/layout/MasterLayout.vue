@@ -55,10 +55,14 @@ import useStore from "@/store/authStore.js";
 
   <!-- Sidebar -->
   <div class="side-nav-open ">
-    <a href="/dashboard" class="side-bar-item mt-2 text-black">
+    <router-link :to="{name:'dashboard'}" class="side-bar-item mt-2 text-black">
       <i class="bi bi-speedometer2 side-bar-item-icon"></i>
       <span>Dashboard</span>
-    </a>
+    </router-link>
+    <router-link :to="{name:'memberList'}" class="side-bar-item mt-2 text-black">
+      <i class="bi bi-speedometer2 side-bar-item-icon"></i>
+      <span>Members</span>
+    </router-link>
     <router-link :to="{name:'TaskList'}"  class="side-bar-item mt-2 text-black">
       <i class="bi bi-pencil-square side-bar-item-icon"></i>
       <span>Tasks</span>

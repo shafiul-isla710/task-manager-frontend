@@ -3,6 +3,8 @@ import {ref} from "vue";
 import authStore from "@/store/authStore.js";
 import {useRouter} from "vue-router";
 import Navbar from "@/pages/Navbar.vue";
+import sweetalert2 from "sweetalert2";
+import Swal from "sweetalert2";
 
 const router = useRouter();
 const name = ref();
@@ -15,16 +17,27 @@ const errors = ref([]);
 
 
 const register = async()=> {
-  const success = await useStore.register({
-    name: name.value,
-    email: email.value,
-    password: password.value,
-    password_confirmation: password_confirm.value,
-  });
-  if (success === true) {
-    setTimeout(() => {
-      router.push("/login");
-    }, 2000)
+
+  const result = await Swal.fire({
+    title: "Do you want to work with?",
+    icon: "warning",
+    showCancelButton: true,
+    cancelButtonColor: "#d33",
+    confirmButtonColor: "#3085d6",
+  })
+
+  if(result.isConfirmed){
+    const success = await useStore.register({
+      name: name.value,
+      email: email.value,
+      password: password.value,
+      password_confirmation: password_confirm.value,
+    });
+    if(success === true){
+      setTimeout(() => {
+        router.push("/login");
+      }, 2000)
+    }
   }
 }
 </script>
