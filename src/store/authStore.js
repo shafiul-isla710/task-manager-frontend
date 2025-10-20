@@ -4,14 +4,18 @@ import {defineStore} from "pinia";
 import cogoToast from "cogo-toast";
 import {useRoute, useRouter} from "vue-router";
 
-const useStore  = defineStore("authStoreUser", ()=>{
+const useStore  = defineStore("authStore", ()=>{
     const token = ref(localStorage.getItem("token") || null);
     const user = ref(null);
     const router = useRouter();
 
-    async function register(credential){
+    async function register(formData){
         try{
-            const res = await axiosClient.post("auth/register",credential)
+            const res = await axiosClient.post("auth/register",formData,{
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            })
             cogoToast.success(res.data.message,{
                 position:"top-right",
                 size:"small",
