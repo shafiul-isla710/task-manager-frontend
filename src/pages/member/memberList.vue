@@ -20,7 +20,7 @@ onMounted(memberFetch)
         <div class="col-md-12">
           <div class=" w-90 p-4">
             <div class=" d-flex justify-content-between align-items-center">
-              <h4>Groups</h4>
+              <h4>Member List</h4>
 <!--              <router-link :to="{name:'createForm'}" class="btn btn-sm btn-primary">Add New</router-link>-->
             </div>
           </div>
@@ -59,8 +59,7 @@ onMounted(memberFetch)
               <td>{{ member.email }}</td>
               <td>{{ member.designation }}</td>
               <td>
-                <button class="btn btn-sm btn-success">Edit</button>
-                <button class="btn btn-sm btn-danger ms-2">Delete</button>
+                <router-link :to="{name:'memberEditForm',params:{id:member.id}}" class="btn btn-sm btn-success">Assign Roll</router-link>
               </td>
             </tr>
             <tr v-else>

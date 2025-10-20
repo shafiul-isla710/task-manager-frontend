@@ -10,8 +10,7 @@ import TaskCreate from "@/pages/task-create-form.vue";
 import group from "@/pages/group/group.vue";
 import form from "@/pages/group/form.vue";
 import MemberList from "@/pages/member/memberList.vue";
-
-
+import MemberEditForm from "@/pages/member/memberEditForm.vue";
 
 const routes = [
     {
@@ -43,6 +42,12 @@ const routes = [
                 path:'/member',
                 name:'memberList',
                 component:MemberList,
+                meta: { requiresAuth: true },
+            },
+            {
+                path:'/member-form/:id',
+                name:'memberEditForm',
+                component:MemberEditForm,
                 meta: { requiresAuth: true },
             },
             {

@@ -1,6 +1,6 @@
 <script setup>
 
-import {ref} from "vue";
+import {ref,computed} from "vue";
 import {useRouter} from "vue-router";
 import authStore from "@/store/authStore.js";
 import Navbar from "@/pages/Navbar.vue";
@@ -10,6 +10,11 @@ const email = ref('')
 const password = ref('')
 
 const useStore = authStore()
+
+//login button disabled
+const isFiled = computed(()=>{
+  return email.value.trim() !== '' && password.value.trim() !== ''
+})
 
 const login = async ()=>{
   const success = await useStore.login({
@@ -34,6 +39,7 @@ const login = async ()=>{
           <div class="card-body">
             <form @submit.prevent="login">
               <h4>SIGN IN</h4>
+              <p>{{isFiled}}</p>
               <br />
               <input
                   placeholder="User Email"
@@ -51,7 +57,7 @@ const login = async ()=>{
                   v-model="password"
               />
               <br />
-              <button class="btn w-100 animated fadeInUp float-end btn-primary">
+              <button class="btn w-100 animated fadeInUp float-end btn-primary" :disabled="!isFiled">
                 Next
               </button>
             </form>
