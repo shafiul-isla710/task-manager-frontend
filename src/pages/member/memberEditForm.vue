@@ -18,7 +18,6 @@ const getMember = async () => {
   email.value = result.data.data.member.email
   selected.value = result.data.data.member.designation
   designation.value=result.data.data.designations
-  console.log(selected.value)
 }
 
 const setDesignation = async () => {

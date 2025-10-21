@@ -1,6 +1,7 @@
 <script setup>
 import {onMounted, ref} from "vue";
 import memberStore from '@/store/memberStore.js'
+import groupStore from '@/store/groupStore.js'
 
 const memberList = ref([])
 const memberFetch = async ()=>{
@@ -8,9 +9,7 @@ const memberFetch = async ()=>{
   memberList.value = result.data.data;
   console.log(memberList.value)
 }
-
 onMounted(memberFetch)
-
 </script>
 
 <template>
@@ -21,7 +20,6 @@ onMounted(memberFetch)
           <div class=" w-90 p-4">
             <div class=" d-flex justify-content-between align-items-center">
               <h4>Member List</h4>
-<!--              <router-link :to="{name:'createForm'}" class="btn btn-sm btn-primary">Add New</router-link>-->
             </div>
           </div>
 
@@ -72,6 +70,49 @@ onMounted(memberFetch)
       </div>
     </div>
   </div>
+
+  <!-- Modal -->
+<!--  <div-->
+<!--      class="modal fade show"-->
+<!--      tabindex="-1"-->
+<!--      style="display: block; background: rgba(0,0,0,0.5);"-->
+<!--      v-if="showModal"-->
+<!--  >-->
+<!--    <div class="modal-dialog modal-dialog-centered ">-->
+<!--      <div class="modal-content container">-->
+<!--        <div class="modal-header">-->
+<!--          <h5 class="modal-title">Groups</h5>-->
+<!--          <button-->
+<!--              type="button"-->
+<!--              class="btn-close"-->
+<!--              @click="showModal = false"-->
+<!--          ></button>-->
+<!--        </div>-->
+
+<!--        <div class="modal-body">-->
+<!--          <select class="form-select mb-3" v-model="selected" >-->
+<!--            <option disabled selected >Select a group</option>-->
+<!--            <option v-if="groups" v-for="(group,index) in groups" :key="index" :value="group.id">{{group.name}}</option>-->
+<!--          </select>-->
+<!--        </div>-->
+
+<!--        <div class="modal-footer">-->
+<!--          <button-->
+<!--              type="button"-->
+<!--              class="btn btn-secondary"-->
+<!--              @click="showModal = false"-->
+<!--          >-->
+<!--            Cancel-->
+<!--          </button>-->
+<!--          <button type="button" class="btn btn-success">-->
+<!--            Save-->
+<!--          </button>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+
+
 </template>
 
 <style scoped>
