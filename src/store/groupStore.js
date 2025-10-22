@@ -82,12 +82,27 @@ const groupStore = defineStore("groupStore", ()=>{
         }
     }
 
+    async function getGroupUser(id){
+        try{
+            const res = await axiosClient.get(`group/${id}/user`);
+            return res
+        }
+        catch(error){
+            cogoToast.error('something went wrong',{
+                position:"top-right",
+                size:"small",
+            })
+            return false
+        }
+    }
+
 
     return {
         fetchGroups,
         createGroup,
         updateGroup,
-        deleteGroup
+        deleteGroup,
+        getGroupUser
     }
 })
 

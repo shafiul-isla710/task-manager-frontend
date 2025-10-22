@@ -8,6 +8,7 @@ import Dashboard from "@/pages/Dashboard.vue";
 import TaskList from "@/pages/TaskList.vue";
 import TaskCreate from "@/pages/task-create-form.vue";
 import group from "@/pages/group/group.vue";
+import groupDetails from "@/pages/group/GroupDetails.vue";
 import form from "@/pages/group/form.vue";
 import MemberList from "@/pages/member/memberList.vue";
 import MemberEditForm from "@/pages/member/memberEditForm.vue";
@@ -84,6 +85,12 @@ const routes = [
                 path:'/form/:id/edit',
                 name:'editForm',
                 component:form,
+                meta: { requiresAuth: true },
+            },
+            {
+                path:'/details/:id',
+                name:'groupDetails',
+                component:groupDetails,
                 meta: { requiresAuth: true },
             },
         ]

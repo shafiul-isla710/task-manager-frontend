@@ -58,7 +58,7 @@ onMounted(groupList)
               <td>{{group.name}}</td>
               <td>{{group.title}}</td>
               <td>
-                <button class="bg-secondary text-white p-2 border-0 rounded">Group Details</button>
+                <router-link :to="{name:'groupDetails',params:{id:group.id}}" class="bg-secondary text-white p-2 border-0 rounded">Group Details</router-link>
               </td>
               <td class="text-right d-flex flex-row gap-3">
                 <router-link :to="{name:'editForm',params:{id:group.id}}" class="bg-success text-white p-2 border-0 rounded">Edit</router-link>
