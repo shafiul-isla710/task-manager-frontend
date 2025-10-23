@@ -40,7 +40,7 @@ onMounted(memberFetch)
                       :src="member.profile_image"
                       alt="Profile"
                       class="rounded-circle border shadow-sm"
-                      style="width: 60px; height: 60px; object-fit: cover;"
+                      style="width: 40px; height: 40px; object-fit: cover;"
                   />
                 </template>
                 <template v-else>
@@ -48,7 +48,7 @@ onMounted(memberFetch)
                       src="@/assets/img/dummy.png"
                       alt="Profile"
                       class="rounded-circle border shadow-sm"
-                      style="width: 60px; height: 60px; object-fit: cover;"
+                      style="width: 40px; height: 40px; object-fit: cover;"
                   />
                 </template>
               </td>

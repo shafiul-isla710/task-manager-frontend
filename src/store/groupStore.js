@@ -118,6 +118,24 @@ const groupStore = defineStore("groupStore", ()=>{
         }
     }
 
+    async function removeMember(group_id, user_id){
+        try{
+            const res = await axiosClient.delete(`groups/${group_id}/user/${user_id}`)
+            cogoToast.success(res.data.message,{
+                position:"top-right",
+                size:"small",
+            })
+            return true
+        }
+        catch(error){
+            cogoToast.error('something went wrong',{
+                position:"top-right",
+                size:"small",
+            })
+            return false
+        }
+    }
+
 
     return {
         fetchGroups,
@@ -125,7 +143,8 @@ const groupStore = defineStore("groupStore", ()=>{
         updateGroup,
         deleteGroup,
         getGroupUser,
-        memberAssign
+        memberAssign,
+        removeMember
     }
 })
 

@@ -27,15 +27,33 @@ const memberFetch = async ()=>{
   memberList.value = Array.isArray(result.data.data) ? result.data.data : []
 }
 
+//assign group function
 const assignMember = async()=>{
-      const result = await groupStore().memberAssign(route.params.id,{
-        user_id:selected.value,
-      })
+  const result = await groupStore().memberAssign(route.params.id,{
+    user_id:selected.value,
+  })
   if(result){
     setTimeout(()=>{
       showModal.value = false
       groupUser()
     },1000)
+  }
+}
+//function for delete member from group
+const removeMember = async(user_id)=>{
+  const result = await Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!"
+  })
+
+  if(result.isConfirmed){
+    await groupStore().removeMember(route.params.id,user_id)
+    groupUser()
   }
 }
 
@@ -103,7 +121,7 @@ onMounted(async ()=>{
                       <td>{{member.email}}</td>
                       <td>{{member.designation}}</td>
                       <td>
-                        <button class="bg-danger text-white p-1 border-0 rounded-sm">Remove</button>
+                        <button @click="removeMember(member.id)" class="bg-danger text-white p-1 border-0 rounded-sm">Remove</button>
                       </td>
                     </tr>
                     <tr v-else>
