@@ -47,20 +47,17 @@ onMounted(groupList)
           <table class="table table-bordered table-striped">
             <thead>
             <tr>
-              <th>Group Name</th>
-              <th>Title</th>
-              <th>Details</th>
-              <th>Action</th>
+              <th class="w-30">Group Name</th>
+              <th class="w-30">Title</th>
+              <th class="w-20">Action</th>
             </tr>
             </thead>
             <tbody>
             <tr v-for="(group, index) in groups" :key="index">
               <td>{{group.name}}</td>
               <td>{{group.title}}</td>
-              <td>
-                <router-link :to="{name:'groupDetails',params:{id:group.id}}" class="bg-secondary text-white p-2 border-0 rounded">Group Details</router-link>
-              </td>
-              <td class="text-right d-flex flex-row gap-3">
+              <td class="text-center d-flex flex-row gap-3">
+                <router-link :to="{name:'groupDetails',params:{id:group.id}}" class="bg-secondary text-white p-2  border-0 rounded">Add Members</router-link>
                 <router-link :to="{name:'editForm',params:{id:group.id}}" class="bg-success text-white p-2 border-0 rounded">Edit</router-link>
                 <button @click="groupDelete(group.id)" class="bg-danger text-white p-2 border-0 rounded">Delete</button>
               </td>

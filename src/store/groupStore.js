@@ -36,7 +36,6 @@ const groupStore = defineStore("groupStore", ()=>{
                 const errors = error.response.data.messages;
                 console.log(errors);
                 return errors;
-
             }
             cogoToast.error('something went wrong',{
                 position:"top-right",
@@ -67,7 +66,7 @@ const groupStore = defineStore("groupStore", ()=>{
         }
     }
 
-    // This function for update
+    // This function for delete group
     async function deleteGroup(id){
         try{
             const res = await axiosClient.delete(`groups/${id}`);
@@ -82,6 +81,7 @@ const groupStore = defineStore("groupStore", ()=>{
         }
     }
 
+    //get group users function
     async function getGroupUser(id){
         try{
             const res = await axiosClient.get(`group/${id}/user`);
@@ -96,13 +96,36 @@ const groupStore = defineStore("groupStore", ()=>{
         }
     }
 
+    //Member assign to group
+    async function memberAssign(id,userId){
+        try{
+            const res = await axiosClient.post(`groups/user/${id}`,userId)
+            cogoToast.success(res.data.message,{
+                position:"top-right",
+                size:"small",
+            })
+            return true
+        }
+        catch(error){
+            if(error.status === 400){
+                const errors = error.response.data.messages;
+                cogoToast.error(error.response.data.messages,{
+                    position:"top-right",
+                    size:"small",
+                })
+            }
+            return false
+        }
+    }
+
 
     return {
         fetchGroups,
         createGroup,
         updateGroup,
         deleteGroup,
-        getGroupUser
+        getGroupUser,
+        memberAssign
     }
 })
 
