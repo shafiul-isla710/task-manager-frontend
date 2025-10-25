@@ -63,7 +63,7 @@ const createOrUpdate = async () => {
   <div  class="content">
     <div class="container">
       <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-md-9">
           <div class="w-90 p-4">
             <div class="d-flex justify-content-between align-items-center">
               <h4>{{isEdit?'Edit Group':'Group Create'}}</h4>
@@ -77,19 +77,19 @@ const createOrUpdate = async () => {
             <form class="">
               <div class="row">
 
-                <div class="col-md-6 mb-3">
-                  <label for="title">Name</label>
+                <div class="col-md-6 mb-3 ">
+                  <label for="name">Group Name</label>
                   <input
-                      placeholder="Name"
-                      class="form-control animated fadeInUp"
+                      placeholder="Group Name"
+                      class="form-control"
                       type="text"
                       v-model="name"
+                      aria-describedby="basic-addon1"
+                      aria-label="name"
                   />
-<!--                  <p>{{status}}</p>-->
-
                 </div>
                 <div class="col-md-6">
-                  <label for="description">Title</label>
+                  <label for="title">Group Title</label>
                   <textarea
                         placeholder="Group Title"
                         class="form-control"

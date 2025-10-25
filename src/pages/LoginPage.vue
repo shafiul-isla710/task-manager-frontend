@@ -39,7 +39,6 @@ const login = async ()=>{
           <div class="card-body">
             <form @submit.prevent="login">
               <h4>SIGN IN</h4>
-              <p>{{isFiled}}</p>
               <br />
               <input
                   placeholder="User Email"

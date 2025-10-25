@@ -4,9 +4,10 @@ import Register from "@/pages/register.vue";
 import HomePage from "@/pages/HomePage.vue";
 import LoginPage from "@/pages/LoginPage.vue";
 import MasterLayout from "@/layout/MasterLayout.vue";
-import Dashboard from "@/pages/Dashboard.vue";
-import TaskList from "@/pages/TaskList.vue";
-import TaskCreate from "@/pages/task-create-form.vue";
+import Dashboard from "@/pages/dashboard/Dashboard.vue";
+import TaskList from "@/pages/task/TaskList.vue";
+import TaskCreate from "@/pages/task/task-create-form.vue";
+import TaskAssign from "@/pages/task/task-assign-form.vue";
 import group from "@/pages/group/group.vue";
 import groupDetails from "@/pages/group/GroupDetails.vue";
 import form from "@/pages/group/form.vue";
@@ -30,15 +31,18 @@ const routes = [
         component:LoginPage,
     },
     {
+        //Master layout
         path:'/',
         component: MasterLayout,
         children:[
+            //dashboard
             {
                 path:'/dashboard',
                 name:'dashboard',
                 component:Dashboard,
                 meta: { requiresAuth: true },
             },
+            // members
             {
                 path:'/member',
                 name:'memberList',
@@ -51,6 +55,8 @@ const routes = [
                 component:MemberEditForm,
                 meta: { requiresAuth: true },
             },
+
+            //task related  path or component
             {
                 path:'/TaskList',
                 name:'TaskList',
@@ -69,6 +75,15 @@ const routes = [
                 component:TaskCreate,
                 meta: { requiresAuth: true },
             },
+            {
+                path:'/Task-assign/:taskId/:assignTo',
+                name:'TaskAssign',
+                component:TaskAssign,
+                props:true,
+                meta: { requiresAuth: true },
+            },
+
+            //group related path or component
             {
                 path:'/groups',
                 name:'groups',
