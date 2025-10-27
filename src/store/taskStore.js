@@ -6,11 +6,11 @@ import cogoToast from "cogo-toast";
 import {useRoute, useRouter} from "vue-router";
 
 const taskStore = defineStore('taskStore', ()=>{
-
+    const task = ref([]);
     async function fetchTasks(page = 1) {
         try{
             const res = await axiosClient.get(`tasks?page=${page}`);
-
+            task.value = res.data.data.data
             return res;
 
         }
@@ -109,7 +109,8 @@ const taskStore = defineStore('taskStore', ()=>{
         createTask,
         updateTask,
         deleteTask,
-        assignTask
+        assignTask,
+        task
     }
 })
 

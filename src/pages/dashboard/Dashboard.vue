@@ -1,20 +1,34 @@
 <script setup>
 import {useRouter} from "vue-router";
-import Swal from "sweetalert2";
+import memberStore from "@/store/memberStore.js";
+import groupStore from "@/store/groupStore.js";
+import taskStore from "@/store/taskStore.js";
+import {onMounted} from "vue";
+
+//store instance
+const member = memberStore()
+const group = groupStore()
+const task = taskStore()
 
 const router = useRouter();
 
-const memberList=(param)=>{
-  if(param === 'memberList'){
+const list=(param)=>{
+  if(param === 'memberList' && confirm('Do you see All Members?')){
     router.push("/member");
   }
-  else if(param === 'groupList'){
+  else if(param === 'groupList' && confirm('Do you see All groups?')){
     router.push("/groups");
   }
-  else if(param === 'taskList'){
+  else if(param === 'taskList' && confirm('Do you see All Task?')){
     router.push("/TaskList");
   }
 }
+
+onMounted(()=>{
+  member.fetchMembers()
+  group.fetchGroups()
+  task.fetchTasks()
+})
 
 </script>
 
@@ -25,12 +39,13 @@ const memberList=(param)=>{
     <div class="container">
       <div class="row">
         <div class="col-lg-4 mb-5">
-          <div @click.prevent="memberList('memberList')" class="card mini-stats-wid">
+          <div @click.prevent="list('memberList')" class="card mini-stats-wid">
             <div class="card-body">
               <div class="d-flex">
                 <div class="flex-grow-1">
-                  <p class="text-muted fw-medium">Total Members in Company</p>
-                  <h4 class="mb-0">10</h4>
+                  <p class="text-muted fw-medium">Total Valid Members</p>
+                  <p v-if="member.loading" >load..</p>
+                  <h4 v-if="!member.loading" class="mb-0">{{member.membersData.length}}</h4>
                 </div>
               </div>
             </div>
@@ -39,12 +54,13 @@ const memberList=(param)=>{
         <!--card end -->
 
         <div class="col-lg-4 mb-5">
-          <div @click.prevent="memberList('groupList')" class="card mini-stats-wid">
+          <div @click.prevent="list('groupList')" class="card mini-stats-wid">
             <div class="card-body">
               <div class="d-flex">
                 <div class="flex-grow-1">
                   <p class="text-muted fw-medium">Total Group Created</p>
-                  <h4 class="mb-0">5</h4>
+                  <p v-if="group.loading" >load..</p>
+                  <h4 class="mb-0">{{group.groups.length}}</h4>
                 </div>
               </div>
             </div>
@@ -53,12 +69,12 @@ const memberList=(param)=>{
         <!--card end -->
 
         <div class="col-lg-4 mb-5">
-          <div @click.prevent="memberList('taskList')" class="card mini-stats-wid">
+          <div @click.prevent="list('taskList')" class="card mini-stats-wid">
             <div class="card-body">
               <div class="d-flex">
                 <div class="flex-grow-1">
                   <p class="text-muted fw-medium">Total Task</p>
-                  <h4 class="mb-0">15</h4>
+                  <h4 class="mb-0">{{task.task.length}}</h4>
                 </div>
               </div>
             </div>
