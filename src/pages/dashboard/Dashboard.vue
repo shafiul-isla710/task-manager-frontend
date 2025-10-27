@@ -1,5 +1,20 @@
 <script setup>
+import {useRouter} from "vue-router";
+import Swal from "sweetalert2";
 
+const router = useRouter();
+
+const memberList=(param)=>{
+  if(param === 'memberList'){
+    router.push("/member");
+  }
+  else if(param === 'groupList'){
+    router.push("/groups");
+  }
+  else if(param === 'taskList'){
+    router.push("/TaskList");
+  }
+}
 
 </script>
 
@@ -7,8 +22,79 @@
 
   <!-- Content -->
   <div class="content">
-    <h3>Dashboard Content Area</h3>
-    <p>This section will display your dashboard content.</p>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 mb-5">
+          <div @click.prevent="memberList('memberList')" class="card mini-stats-wid">
+            <div class="card-body">
+              <div class="d-flex">
+                <div class="flex-grow-1">
+                  <p class="text-muted fw-medium">Total Members in Company</p>
+                  <h4 class="mb-0">10</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--card end -->
+
+        <div class="col-lg-4 mb-5">
+          <div @click.prevent="memberList('groupList')" class="card mini-stats-wid">
+            <div class="card-body">
+              <div class="d-flex">
+                <div class="flex-grow-1">
+                  <p class="text-muted fw-medium">Total Group Created</p>
+                  <h4 class="mb-0">5</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--card end -->
+
+        <div class="col-lg-4 mb-5">
+          <div @click.prevent="memberList('taskList')" class="card mini-stats-wid">
+            <div class="card-body">
+              <div class="d-flex">
+                <div class="flex-grow-1">
+                  <p class="text-muted fw-medium">Total Task</p>
+                  <h4 class="mb-0">15</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--card end -->
+
+        <div class="col-lg-4 mb-5">
+          <div class="card mini-stats-wid">
+            <div class="card-body">
+              <div class="d-flex">
+                <div class="flex-grow-1">
+                  <p class="text-muted fw-medium">In Progress Task</p>
+                  <h4 class="mb-0">15</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--card end -->
+
+        <div class="col-lg-4 mb-5">
+          <div class="card mini-stats-wid">
+            <div class="card-body">
+              <div class="d-flex">
+                <div class="flex-grow-1">
+                  <p class="text-muted fw-medium">Completed Task</p>
+                  <h4 class="mb-0">15</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--card end -->
+      </div>
+    </div>
   </div>
 </template>
 
