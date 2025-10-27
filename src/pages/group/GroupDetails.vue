@@ -5,6 +5,9 @@ import {useRoute} from "vue-router";
 import Swal from "sweetalert2";
 import memberStore from "@/store/memberStore.js";
 
+//member store create
+const store = memberStore();
+
 const group = ref([])
 const groupMembers = ref([])
 const countMember = ref(0)
@@ -15,17 +18,14 @@ const groupUser = async()=>{
     group.value = result.data.data.group
     groupMembers.value = result.data.data.members
     countMember.value = groupMembers.value.length
+    console.log(groupMembers.value)
 }
 
 // user or member assign to group
 const showModal = ref(false)
 const selected = ref('')
 
-const memberList = ref([])
-const memberFetch = async ()=>{
-  const result = await memberStore().fetchMembers()
-  memberList.value = Array.isArray(result.data.data) ? result.data.data : []
-}
+
 
 //assign group function
 const assignMember = async()=>{
@@ -58,8 +58,8 @@ const removeMember = async(user_id)=>{
 }
 
 onMounted(async ()=>{
-  await memberFetch()
   await groupUser()
+  store.fetchMembers()
 })
 
 </script>
@@ -162,7 +162,7 @@ onMounted(async ()=>{
         <div class="modal-body">
           <select class="form-select mb-3 form-control" v-model="selected">
             <option selected >Select a group</option>
-            <option v-if="memberList.length" v-for="(member,index) in memberList" :key="index" :value="Number(member.id)">
+            <option v-if="store.membersData" v-for="(member,index) in store.membersData" :key="index" :value="Number(member.id)">
               {{member.name}} -  {{member.designation}}
             </option>
           </select>

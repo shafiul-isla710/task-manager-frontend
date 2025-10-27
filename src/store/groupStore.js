@@ -6,18 +6,20 @@ import {useRouter} from 'vue-router'
 
 const groupStore = defineStore("groupStore", ()=>{
     const router = useRouter()
-
+    const groups = ref([]);
     //fetch group
     async function fetchGroups() {
         try{
             const res = await axiosClient.get("groups")
-            return res;
+            groups.value = res.data.data
+            return true
         }
         catch(error) {
             cogoToast.error('something went wrong',{
                 position:"top-right",
                 size:"small",
             });
+            return false;
         }
     }
 
@@ -144,7 +146,8 @@ const groupStore = defineStore("groupStore", ()=>{
         deleteGroup,
         getGroupUser,
         memberAssign,
-        removeMember
+        removeMember,
+        groups
     }
 })
 

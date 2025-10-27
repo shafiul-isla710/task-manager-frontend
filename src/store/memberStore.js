@@ -7,11 +7,13 @@ import {useRoute, useRouter} from "vue-router";
 
 const memberStore = defineStore("memberStore", ()=>{
     const router = useRouter();
+    const membersData = ref([]);
 
     async function fetchMembers(){
         try{
             const res = await axiosClient.get("members");
-            return res;
+            membersData.value = res.data.data
+            return true
         }
         catch(error){
             cogoToast.error('Something went wrong',{
@@ -60,7 +62,8 @@ const memberStore = defineStore("memberStore", ()=>{
     return {
         fetchMembers,
         member,
-        setDesignation
+        setDesignation,
+        membersData
     }
 })
 

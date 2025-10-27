@@ -3,13 +3,15 @@ import {onMounted, ref} from "vue";
 import groupStore from '@/store/groupStore.js'
 import Swal from "sweetalert2";
 
-const groups = ref([]);
+// const groups = ref([]);
+const store = groupStore();
 
 // Group list Function
-const groupList = async() =>{
-  const result = await groupStore().fetchGroups()
-   groups.value = result.data.data
-}
+// const groupList = async() =>{
+//   const result = await groupStore().fetchGroups()
+//    groups.value = result.data.data
+// }
+// const groups = store.groups
 
 // Group Delete Function
 const groupDelete = async(id) =>{
@@ -25,10 +27,12 @@ const groupDelete = async(id) =>{
 
   if(result.isConfirmed){
     await groupStore().deleteGroup(id)
-    groupList()
+    store.fetchGroups()
   }
 }
-onMounted(groupList)
+onMounted(() => {
+  store.fetchGroups()
+})
 </script>
 
 <template>
@@ -49,13 +53,19 @@ onMounted(groupList)
             <tr>
               <th class="w-30">Group Name</th>
               <th class="w-30">Title</th>
+              <th class="w-30">status</th>
               <th class="w-20">Action</th>
             </tr>
             </thead>
             <tbody>
-            <tr v-for="(group, index) in groups" :key="index">
+            <tr v-for="(group, index) in store.groups" :key="index">
               <td>{{group.name}}</td>
               <td>{{group.title}}</td>
+              <td>
+                <span class="badge bg-success" v-if="group.status === 1">Active</span>
+                <span class="badge bg-danger" v-else>Inactive</span>
+
+              </td>
               <td class="text-center d-flex flex-row gap-3">
                 <router-link :to="{name:'groupDetails',params:{id:group.id}}" class="bg-secondary text-white p-2  border-0 rounded">Add Members</router-link>
                 <router-link :to="{name:'editForm',params:{id:group.id}}" class="bg-success text-white p-2 border-0 rounded">Edit</router-link>

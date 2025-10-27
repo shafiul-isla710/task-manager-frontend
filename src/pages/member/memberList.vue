@@ -2,13 +2,18 @@
 import {onMounted, ref} from "vue";
 import memberStore from '@/store/memberStore.js'
 
-const memberList = ref([])
-const memberFetch = async ()=>{
-  const result = await memberStore().fetchMembers()
-  memberList.value = result.data.data;
-  console.log(memberList.value)
-}
-onMounted(memberFetch)
+const store = memberStore();
+
+// const memberList = ref([])
+// const memberFetch = async ()=>{
+//   const result = await memberStore().fetchMembers()
+//   memberList.value = result.data.data;
+//   console.log(memberList.value)
+// }
+// onMounted(memberFetch)
+onMounted(()=>{
+  store.fetchMembers()
+})
 </script>
 
 <template>
@@ -33,7 +38,7 @@ onMounted(memberFetch)
             </tr>
             </thead>
             <tbody>
-            <tr v-if="memberList.length" v-for="(member, index) in memberList" :key="index">
+            <tr v-if="store.membersData.length" v-for="(member, index) in store.membersData" :key="index">
               <td>
                 <template v-if="member.profile_image">
                   <img

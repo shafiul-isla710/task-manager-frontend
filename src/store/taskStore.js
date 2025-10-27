@@ -84,11 +84,32 @@ const taskStore = defineStore('taskStore', ()=>{
         }
     }
 
+    async function assignTask(task,credentials){
+        try{
+            const res = await axiosClient.post(`tasks/${task}/assign`,credentials)
+            cogoToast.success(res.data.message,{
+                position:"top-right",
+                size:"small",
+            })
+            return true
+        }
+        catch(error){
+            if(error.status === 422){
+                cogoToast.error(error.response.data.messages,{
+                    position:"top-right",
+                    size:"small",
+                })
+            }
+            return false
+        }
+    }
+
     return {
         fetchTasks,
         createTask,
         updateTask,
-        deleteTask
+        deleteTask,
+        assignTask
     }
 })
 

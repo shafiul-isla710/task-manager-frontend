@@ -6,7 +6,6 @@ import {useRoute, useRouter} from "vue-router";
 
 const useStore  = defineStore("authStore", ()=>{
     const token = ref(localStorage.getItem("token") || null);
-    const user = ref(null);
     const router = useRouter();
 
     async function register(formData){
@@ -48,8 +47,7 @@ const useStore  = defineStore("authStore", ()=>{
         try{
             const res = await axiosClient.post("auth/login",credential)
             localStorage.setItem("token", res.data.data.token)
-            // user.value = res.data.data.data;
-            console.log(res.data.data.data);
+            localStorage.setItem("user",JSON.stringify(res.data.data.user) )
             cogoToast.success(res.data.message,{
                 position:"top-right",
                 size:"small",
@@ -83,6 +81,7 @@ const useStore  = defineStore("authStore", ()=>{
            const res = await axiosClient.delete('auth/logout');
            token.value = null;
            localStorage.removeItem("token");
+           localStorage.removeItem("user");
            cogoToast.success(res.data.message,{
                position:"top-right",
                size:"small",
@@ -104,7 +103,6 @@ const useStore  = defineStore("authStore", ()=>{
     }
 
     return{
-        user,
         token,
         register,
         login,

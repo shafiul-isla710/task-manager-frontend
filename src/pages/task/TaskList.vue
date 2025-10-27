@@ -95,8 +95,8 @@ onMounted(taskList);
         </div>
         <div class="modal-body">
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" value="member" v-model="picked.assignTo" id="flexRadioDefault1">
-            <label class="form-check-label" for="flexRadioDefault1">To Member</label>
+            <input class="form-check-input" type="radio" name="flexRadioDefault" value="user" v-model="picked.assignTo" id="flexRadioDefault1">
+            <label class="form-check-label" for="flexRadioDefault1">To User</label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="radio" name="flexRadioDefault" value="group" v-model="picked.assignTo" id="flexRadioDefault2" >
