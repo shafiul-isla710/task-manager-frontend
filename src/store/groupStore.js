@@ -7,11 +7,14 @@ import {useRouter} from 'vue-router'
 const groupStore = defineStore("groupStore", ()=>{
     const router = useRouter()
     const groups = ref([]);
+    const loading = ref(false);
     //fetch group
     async function fetchGroups() {
         try{
+            loading.value = true;
             const res = await axiosClient.get("groups")
             groups.value = res.data.data
+            loading.value = false;
             return true
         }
         catch(error) {
@@ -147,7 +150,8 @@ const groupStore = defineStore("groupStore", ()=>{
         getGroupUser,
         memberAssign,
         removeMember,
-        groups
+        groups,
+        loading
     }
 })
 

@@ -8,11 +8,14 @@ import {useRoute, useRouter} from "vue-router";
 const memberStore = defineStore("memberStore", ()=>{
     const router = useRouter();
     const membersData = ref([]);
+    const loading = ref(false);
 
     async function fetchMembers(){
         try{
+            loading.value = true;
             const res = await axiosClient.get("members");
             membersData.value = res.data.data
+            loading.value = false;
             return true
         }
         catch(error){
@@ -63,7 +66,8 @@ const memberStore = defineStore("memberStore", ()=>{
         fetchMembers,
         member,
         setDesignation,
-        membersData
+        membersData,
+        loading
     }
 })
 

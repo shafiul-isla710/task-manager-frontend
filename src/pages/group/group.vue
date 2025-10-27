@@ -6,14 +6,6 @@ import Swal from "sweetalert2";
 // const groups = ref([]);
 const store = groupStore();
 
-// Group list Function
-// const groupList = async() =>{
-//   const result = await groupStore().fetchGroups()
-//    groups.value = result.data.data
-// }
-// const groups = store.groups
-
-// Group Delete Function
 const groupDelete = async(id) =>{
   const result = await Swal.fire({
     title: "Are you sure?",
@@ -47,8 +39,13 @@ onMounted(() => {
               <router-link :to="{name:'createForm'}" class="btn btn-sm btn-primary">Add New</router-link>
             </div>
           </div>
+          <!-- Loading spinner-->
+          <div v-if="store.loading" class="d-flex align-items-center">
+            <strong>Loading...</strong>
+            <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+          </div>
 
-          <table class="table table-bordered table-striped">
+          <table v-if="!store.loading" class="table table-bordered table-striped">
             <thead>
             <tr>
               <th class="w-30">Group Name</th>

@@ -17,7 +17,9 @@ onMounted(()=>{
 </script>
 
 <template>
+
   <div  class="content">
+
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-md-12">
@@ -26,8 +28,13 @@ onMounted(()=>{
               <h4>Member List</h4>
             </div>
           </div>
+          <!-- Loading spinner-->
+          <div v-if="store.loading" class="d-flex align-items-center">
+            <strong>Loading...</strong>
+            <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+          </div>
 
-          <table class="table table-hover align-middle text-center">
+          <table v-if="!store.loading" class="table table-hover align-middle text-center">
             <thead class="table-light">
             <tr>
               <th>Image</th>

@@ -7,11 +7,15 @@ const tasks = ref([])
 const pagination = ref({})
 const currentPage = ref(1)
 
+const loading = ref(true)
+
 const taskList = async () =>{
+   loading.value = true
    const result = await taskStore().fetchTasks();
    // console.log(result.data.data.first_page_url)
    tasks.value = result.data.data.data
    pagination.value = result.data.data;
+   loading.value = false
 }
 
 const deleteTask = async (id) =>{
@@ -53,7 +57,13 @@ onMounted(taskList);
             </div>
           </div>
 
-          <table class="table table-striped">
+          <!-- Loading spinner-->
+          <div v-if="loading" class="d-flex align-items-center">
+            <strong>Loading...</strong>
+            <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+          </div>
+
+          <table v-if="!loading" class="table table-striped">
             <thead>
             <tr>
               <th class="w-30">Title</th>
