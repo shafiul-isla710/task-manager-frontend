@@ -7,11 +7,24 @@ import {useRoute, useRouter} from "vue-router";
 
 const taskStore = defineStore('taskStore', ()=>{
     const task = ref([]);
-    async function fetchTasks(page = 1) {
+    const pagination = ref({})
+    const loading = ref(false);
+    async function fetchTasks(page = 1,title=null) {
         try{
-            const res = await axiosClient.get(`tasks?page=${page}`);
+            loading.value = true;
+            const res = await axiosClient.get('/tasks',{params:{
+                page:page, title:title
+                }});
             task.value = res.data.data.data
-            return res;
+            pagination.value = {
+                current_page: res.data.data.current_page,
+                last_page: res.data.data.last_page,
+                links: res.data.data.links,
+                next_page_url: res.data.data.next_page_url,
+                prev_page_url: res.data.data.prev_page_url,
+            }
+            loading.value = false;
+            return true;
 
         }
         catch(error) {
@@ -110,7 +123,9 @@ const taskStore = defineStore('taskStore', ()=>{
         updateTask,
         deleteTask,
         assignTask,
-        task
+        task,
+        loading,
+        pagination
     }
 })
 

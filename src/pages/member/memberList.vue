@@ -1,16 +1,32 @@
 <script setup>
-import {onMounted, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import memberStore from '@/store/memberStore.js'
 
 const store = memberStore();
 
-// const memberList = ref([])
-// const memberFetch = async ()=>{
-//   const result = await memberStore().fetchMembers()
-//   memberList.value = result.data.data;
-//   console.log(memberList.value)
-// }
-// onMounted(memberFetch)
+const designation = ['viewer','UX Designer','Web Developer','Web Designer','Apps Developer']
+
+//pagination
+const goToPage = async (url) => {
+  if(!url) return;
+
+  const u = new URL(url);
+  const page = u.searchParams.get('page');
+  await store.fetchMembers(page);
+}
+
+//search
+const searchData = ref('')
+const search = async()=>{
+  await store.fetchMembers(1,searchData.value);
+}
+
+// Designation
+const selected = ref('')
+const selectDesignation = async()=>{
+  await store.fetchMembers(1,'',selected.value);
+}
+
 onMounted(()=>{
   store.fetchMembers()
 })
@@ -34,7 +50,26 @@ onMounted(()=>{
             <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
           </div>
 
-          <table v-if="!store.loading" class="table table-hover align-middle text-center">
+          <!-- search input-->
+          <div class="row mb-3">
+            <div class="col-md-3">
+              <label for="basic-url" class="form-label">Search</label>
+              <div class="input-group mb-3">
+                <input type="search" @keyup="search" v-model="searchData" placeholder="Search by Name" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <label for="basic-url" class="form-label">Designation</label>
+              <select name="" @change="selectDesignation" id="" v-model="selected" class="form-control">
+                <option value="">Select..</option>
+                <option v-for="(item,index) in designation" :key="index" :value="item">{{item}}</option>
+                <option>UI/UX Developer</option>
+              </select>
+            </div>
+          </div>
+          <p>{{designation1}}</p>
+
+          <table v-if="!store.loading" class="table table-hover align-middle text-center ">
             <thead class="table-light">
             <tr>
               <th>Image</th>
@@ -77,6 +112,45 @@ onMounted(()=>{
             </tbody>
           </table>
 
+          <!-- Pagination buttons -->
+          <nav aria-label="Page navigation example" v-if="store.pagination.links">
+            <ul class="pagination justify-content-start">
+              <!-- Previous Button -->
+              <li class="page-item" :class="{ disabled: !store.pagination.prev_page_url }">
+                <button
+                    class="page-link"
+                    @click="goToPage(store.pagination.prev_page_url)"
+                    :disabled="!store.pagination.prev_page_url"
+                >
+                  <<
+                </button>
+              </li>
+              <!-- Page Numbers -->
+              <li
+                  v-for="(link, index) in store.pagination.links.slice(1, -1)"
+                  :key="index"
+                  class="page-item"
+                  :class="{ active: link.active }"
+              >
+                <button
+                    class="page-link"
+                    v-html="link.label"
+                    @click="goToPage(link.url)"
+                    :disabled="!link.url"
+                ></button>
+              </li>
+              <!-- Next Button -->
+              <li class="page-item" :class="{ disabled: !store.pagination.next_page_url }">
+                <button
+                    class="page-link"
+                    @click="goToPage(store.pagination.next_page_url)"
+                    :disabled="!store.pagination.next_page_url"
+                >
+                  >>
+                </button>
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
     </div>

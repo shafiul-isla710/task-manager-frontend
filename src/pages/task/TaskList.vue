@@ -3,21 +3,25 @@ import {onMounted, reactive, ref} from "vue";
 import taskStore from "@/store/taskStore.js";
 import Swal from "sweetalert2";
 
-const tasks = ref([])
-const pagination = ref({})
-const currentPage = ref(1)
+const store = taskStore()
 
-const loading = ref(true)
+//Pagination
+async function goToPage(url) {
+  if (!url) return;
 
-const taskList = async () =>{
-   loading.value = true
-   const result = await taskStore().fetchTasks();
-   // console.log(result.data.data.first_page_url)
-   tasks.value = result.data.data.data
-   pagination.value = result.data.data;
-   loading.value = false
+  const u = new URL(url);
+  const page = u.searchParams.get('page');
+  await store.fetchTasks(page);
 }
 
+//search
+const searchData = ref('')
+const search = async () =>{
+  await store.fetchTasks(1,searchData.value);
+}
+
+
+//Delete Task
 const deleteTask = async (id) =>{
 
   const result = await Swal.fire({
@@ -41,7 +45,9 @@ const picked = reactive({
   taskId:''
 });
 
-onMounted(taskList);
+onMounted(() => {
+  store.fetchTasks()
+})
 
 </script>
 
@@ -58,12 +64,20 @@ onMounted(taskList);
           </div>
 
           <!-- Loading spinner-->
-          <div v-if="loading" class="d-flex align-items-center">
+          <div v-if="store.loading" class="d-flex align-items-center">
             <strong>Loading...</strong>
             <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
           </div>
-
-          <table v-if="!loading" class="table table-striped">
+          <!-- search input-->
+          <div class="row">
+            <div class="col-md-3">
+              <label for="basic-url" class="form-label">Search</label>
+              <div class="input-group mb-3">
+                <input type="search" @keyup="search" v-model="searchData" placeholder="Search by title" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+              </div>
+            </div>
+          </div>
+          <table v-if="!store.loading" class="table table-striped">
             <thead>
             <tr>
               <th class="w-30">Title</th>
@@ -72,7 +86,7 @@ onMounted(taskList);
             </tr>
             </thead>
             <tbody>
-              <tr v-for="(task,index) in tasks" :key="index">
+              <tr v-for="(task,index) in store.task" :key="index">
                 <td>{{ task.title }}</td>
                 <td>{{ task.description }}</td>
                 <td class="text-right d-flex flex-row gap-3">
@@ -83,11 +97,54 @@ onMounted(taskList);
               </tr>
             </tbody>
           </table>
+
+          <!-- Pagination buttons -->
+          <nav aria-label="Page navigation example" v-if="store.pagination.links">
+            <ul class="pagination justify-content-start">
+              <!-- Previous Button -->
+              <li class="page-item" :class="{ disabled: !store.pagination.prev_page_url }">
+                <button
+                  class="page-link"
+                  @click="goToPage(store.pagination.prev_page_url)"
+                  :disabled="!store.pagination.prev_page_url"
+                >
+                  <<
+                </button>
+              </li>
+              <!-- Page Numbers -->
+              <li
+                v-for="(link, index) in store.pagination.links.slice(1, -1)"
+                :key="index"
+                class="page-item"
+                :class="{ active: link.active }"
+              >
+                <button
+                  class="page-link"
+                  v-html="link.label"
+                  @click="goToPage(link.url)"
+                  :disabled="!link.url"
+                ></button>
+              </li>
+              <!-- Next Button -->
+              <li class="page-item" :class="{ disabled: !store.pagination.next_page_url }">
+                <button
+                  class="page-link"
+                  @click="goToPage(store.pagination.next_page_url)"
+                  :disabled="!store.pagination.next_page_url"
+                >
+                  >>
+                </button>
+              </li>
+            </ul>
+          </nav>
+
+
         </div>
       </div>
     </div>
   </div>
 
+<!--modal start-->
   <div class="modal fade show"
        tabindex="-1"
        style="display: block; background: rgba(0,0,0,0.5);"
@@ -139,5 +196,8 @@ onMounted(taskList);
   margin-top:200px;
   margin-left:auto;
   margin-right:auto;
+}
+.pagination {
+  margin-top: 20px;
 }
 </style>

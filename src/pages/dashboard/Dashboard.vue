@@ -38,6 +38,7 @@ onMounted(()=>{
   <div class="content">
     <div class="container">
       <div class="row">
+
         <div class="col-lg-4 mb-5">
           <div @click.prevent="list('memberList')" class="card mini-stats-wid">
             <div class="card-body">
@@ -88,7 +89,7 @@ onMounted(()=>{
               <div class="d-flex">
                 <div class="flex-grow-1">
                   <p class="text-muted fw-medium">In Progress Task</p>
-                  <h4 class="mb-0">15</h4>
+                  <h4 class="mb-0">0</h4>
                 </div>
               </div>
             </div>
@@ -102,7 +103,7 @@ onMounted(()=>{
               <div class="d-flex">
                 <div class="flex-grow-1">
                   <p class="text-muted fw-medium">Completed Task</p>
-                  <h4 class="mb-0">15</h4>
+                  <h4 class="mb-0">0</h4>
                 </div>
               </div>
             </div>

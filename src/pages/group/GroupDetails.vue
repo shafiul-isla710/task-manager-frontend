@@ -18,7 +18,6 @@ const groupUser = async()=>{
     group.value = result.data.data.group
     groupMembers.value = result.data.data.members
     countMember.value = groupMembers.value.length
-    console.log(groupMembers.value)
 }
 
 // user or member assign to group

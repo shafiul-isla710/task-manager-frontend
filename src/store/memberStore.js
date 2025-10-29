@@ -9,12 +9,24 @@ const memberStore = defineStore("memberStore", ()=>{
     const router = useRouter();
     const membersData = ref([]);
     const loading = ref(false);
+    const pagination =ref({});
 
-    async function fetchMembers(){
+    async function fetchMembers(page=1,name=null,desig=null) {
         try{
             loading.value = true;
-            const res = await axiosClient.get("members");
-            membersData.value = res.data.data
+            const res = await axiosClient.get('/members',{params:{
+                    page:page,
+                    name:name,
+                    designation:desig,
+                }});
+            membersData.value = res.data.data.data
+            pagination.value = {
+                current_page: res.data.data.current_page,
+                last_page: res.data.data.last_page,
+                links: res.data.data.links,
+                next_page_url: res.data.data.next_page_url,
+                prev_page_url: res.data.data.prev_page_url,
+            }
             loading.value = false;
             return true
         }
@@ -67,7 +79,8 @@ const memberStore = defineStore("memberStore", ()=>{
         member,
         setDesignation,
         membersData,
-        loading
+        loading,
+        pagination,
     }
 })
 
