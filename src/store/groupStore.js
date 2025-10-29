@@ -8,12 +8,23 @@ const groupStore = defineStore("groupStore", ()=>{
     const router = useRouter()
     const groups = ref([]);
     const loading = ref(false);
+    const pagination =ref({});
     //fetch group
-    async function fetchGroups() {
+    async function fetchGroups(page = 1,name=null) {
         try{
             loading.value = true;
-            const res = await axiosClient.get("groups")
-            groups.value = res.data.data
+            const res = await axiosClient.get('/groups',{params:{
+                    page:page,
+                    name:name,
+                }})
+            groups.value = res.data.data.data
+            pagination.value = {
+                current_page: res.data.data.current_page,
+                last_page: res.data.data.last_page,
+                links: res.data.data.links,
+                next_page_url: res.data.data.next_page_url,
+                prev_page_url: res.data.data.prev_page_url,
+            }
             loading.value = false;
             return true
         }
@@ -151,7 +162,8 @@ const groupStore = defineStore("groupStore", ()=>{
         memberAssign,
         removeMember,
         groups,
-        loading
+        loading,
+        pagination
     }
 })
 

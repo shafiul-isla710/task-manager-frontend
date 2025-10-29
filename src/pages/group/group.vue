@@ -22,6 +22,20 @@ const groupDelete = async(id) =>{
     store.fetchGroups()
   }
 }
+//pagination
+const goToPage = async(url)=>{
+  if(!url) return ;
+
+  const u = new URL(url);
+  const page = u.searchParams.get("page");
+  await store.fetchGroups(page);
+}
+//search
+const searchData = ref('')
+const search = async()=>{
+  await store.fetchGroups(1,searchData.value);
+}
+
 onMounted(() => {
   store.fetchGroups()
 })
@@ -43,6 +57,16 @@ onMounted(() => {
           <div v-if="store.loading" class="d-flex align-items-center">
             <strong>Loading...</strong>
             <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+          </div>
+
+          <!--search-->
+          <div class="row mb-3">
+            <div class="col-md-3">
+              <label for="basic-url" class="form-label">Search</label>
+              <div class="input-group mb-3">
+                <input type="search" @keyup="search" v-model="searchData" placeholder="Search by Name" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+              </div>
+            </div>
           </div>
 
           <table v-if="!store.loading" class="table table-bordered table-striped">
@@ -71,6 +95,47 @@ onMounted(() => {
             </tr>
             </tbody>
           </table>
+
+          <!-- Pagination buttons -->
+          <nav aria-label="Page navigation example" v-if="store.pagination.links">
+            <ul class="pagination justify-content-start">
+              <!-- Previous Button -->
+              <li class="page-item" :class="{ disabled: !store.pagination.prev_page_url }">
+                <button
+                    class="page-link"
+                    @click="goToPage(store.pagination.prev_page_url)"
+                    :disabled="!store.pagination.prev_page_url"
+                >
+                  <<
+                </button>
+              </li>
+              <!-- Page Numbers -->
+              <li
+                  v-for="(link, index) in store.pagination.links.slice(1, -1)"
+                  :key="index"
+                  class="page-item"
+                  :class="{ active: link.active }"
+              >
+                <button
+                    class="page-link"
+                    v-html="link.label"
+                    @click="goToPage(link.url)"
+                    :disabled="!link.url"
+                ></button>
+              </li>
+              <!-- Next Button -->
+              <li class="page-item" :class="{ disabled: !store.pagination.next_page_url }">
+                <button
+                    class="page-link"
+                    @click="goToPage(store.pagination.next_page_url)"
+                    :disabled="!store.pagination.next_page_url"
+                >
+                  >>
+                </button>
+              </li>
+            </ul>
+          </nav>
+
         </div>
       </div>
     </div>
