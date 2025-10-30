@@ -9,19 +9,21 @@ const taskStore = defineStore('taskStore', ()=>{
     const task = ref([]);
     const pagination = ref({})
     const loading = ref(false);
+    const count = ref(0);
     async function fetchTasks(page = 1,title=null) {
         try{
             loading.value = true;
             const res = await axiosClient.get('/tasks',{params:{
                 page:page, title:title
                 }});
-            task.value = res.data.data.data
+            task.value = res.data.data.tasks.data
+            count.value = res.data.data.total
             pagination.value = {
-                current_page: res.data.data.current_page,
-                last_page: res.data.data.last_page,
-                links: res.data.data.links,
-                next_page_url: res.data.data.next_page_url,
-                prev_page_url: res.data.data.prev_page_url,
+                current_page: res.data.data.tasks.current_page,
+                last_page: res.data.data.tasks.last_page,
+                links: res.data.data.tasks.links,
+                next_page_url: res.data.data.tasks.next_page_url,
+                prev_page_url: res.data.data.tasks.prev_page_url,
             }
             loading.value = false;
             return true;
@@ -125,7 +127,8 @@ const taskStore = defineStore('taskStore', ()=>{
         assignTask,
         task,
         loading,
-        pagination
+        pagination,
+        count
     }
 })
 

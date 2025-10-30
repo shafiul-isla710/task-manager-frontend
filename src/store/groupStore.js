@@ -9,6 +9,7 @@ const groupStore = defineStore("groupStore", ()=>{
     const groups = ref([]);
     const loading = ref(false);
     const pagination =ref({});
+    const count = ref(0);
     //fetch group
     async function fetchGroups(page = 1,name=null) {
         try{
@@ -17,13 +18,14 @@ const groupStore = defineStore("groupStore", ()=>{
                     page:page,
                     name:name,
                 }})
-            groups.value = res.data.data.data
+            groups.value = res.data.data.groups.data
+            count.value = res.data.data.total
             pagination.value = {
-                current_page: res.data.data.current_page,
-                last_page: res.data.data.last_page,
-                links: res.data.data.links,
-                next_page_url: res.data.data.next_page_url,
-                prev_page_url: res.data.data.prev_page_url,
+                current_page: res.data.data.groups.current_page,
+                last_page: res.data.data.groups.last_page,
+                links: res.data.data.groups.links,
+                next_page_url: res.data.data.groups.next_page_url,
+                prev_page_url: res.data.data.groups.prev_page_url,
             }
             loading.value = false;
             return true
@@ -163,7 +165,8 @@ const groupStore = defineStore("groupStore", ()=>{
         removeMember,
         groups,
         loading,
-        pagination
+        pagination,
+        count
     }
 })
 

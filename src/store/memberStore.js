@@ -10,6 +10,7 @@ const memberStore = defineStore("memberStore", ()=>{
     const membersData = ref([]);
     const loading = ref(false);
     const pagination =ref({});
+    const count = ref(0);
 
     async function fetchMembers(page=1,name=null,desig=null) {
         try{
@@ -19,13 +20,16 @@ const memberStore = defineStore("memberStore", ()=>{
                     name:name,
                     designation:desig,
                 }});
-            membersData.value = res.data.data.data
+            console.log(res)
+            membersData.value = res.data.data.members.data
+            count.value = res.data.data.total
+            console.log(count.value)
             pagination.value = {
-                current_page: res.data.data.current_page,
-                last_page: res.data.data.last_page,
-                links: res.data.data.links,
-                next_page_url: res.data.data.next_page_url,
-                prev_page_url: res.data.data.prev_page_url,
+                current_page: res.data.data.members.current_page,
+                last_page: res.data.data.members.last_page,
+                links: res.data.data.members.links,
+                next_page_url: res.data.data.members.next_page_url,
+                prev_page_url: res.data.data.members.prev_page_url,
             }
             loading.value = false;
             return true
@@ -81,6 +85,7 @@ const memberStore = defineStore("memberStore", ()=>{
         membersData,
         loading,
         pagination,
+        count
     }
 })
 
