@@ -66,50 +66,52 @@ onMounted(()=>{
               </select>
             </div>
           </div>
-          <p>{{designation1}}</p>
 
-          <table v-if="!store.loading" class="table table-hover align-middle text-center ">
-            <thead class="table-light">
-            <tr>
-              <th>Image</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Designation</th>
-              <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-if="store.membersData.length" v-for="(member, index) in store.membersData" :key="index">
-              <td>
-                <template v-if="member.profile_image">
-                  <img
-                      :src="member.profile_image"
-                      alt="Profile"
-                      class="rounded-circle border shadow-sm"
-                      style="width: 40px; height: 40px; object-fit: cover;"
-                  />
-                </template>
-                <template v-else>
-                  <img
-                      src="@/assets/img/dummy.jpeg"
-                      alt="Profile"
-                      class="rounded-circle border shadow-sm"
-                      style="width: 40px; height: 40px; object-fit: cover;"
-                  />
-                </template>
-              </td>
-              <td>{{ member.name }}</td>
-              <td>{{ member.email }}</td>
-              <td>{{ member.designation }}</td>
-              <td>
-                <router-link :to="{name:'memberEditForm',params:{id:member.id}}" class="btn btn-sm btn-success">Assign Roll</router-link>
-              </td>
-            </tr>
-            <tr v-else>
-              <td colspan="5">No members found</td>
-            </tr>
-            </tbody>
-          </table>
+          <div class="table-responsive">
+            <table v-if="!store.loading" class="table table-hover align-middle text-center ">
+              <thead class="table-light">
+              <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Designation</th>
+                <th>Action</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr v-if="store.membersData.length" v-for="(member, index) in store.membersData" :key="index">
+                <td>
+                  <template v-if="member.profile_image">
+                    <img
+                        :src="member.profile_image"
+                        alt="Profile"
+                        class="rounded-circle border shadow-sm"
+                        style="width: 40px; height: 40px; object-fit: cover;"
+                    />
+                  </template>
+                  <template v-else>
+                    <img
+                        src="@/assets/img/dummy.jpeg"
+                        alt="Profile"
+                        class="rounded-circle border shadow-sm"
+                        style="width: 40px; height: 40px; object-fit: cover;"
+                    />
+                  </template>
+                </td>
+                <td>{{ member.name }}</td>
+                <td>{{ member.email }}</td>
+                <td>{{ member.designation }}</td>
+                <td>
+                  <router-link :to="{name:'memberEditForm',params:{id:member.id}}" class="btn btn-sm btn-success">Assign Roll</router-link>
+                </td>
+              </tr>
+              <tr v-else>
+                <td colspan="5">No members found</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+
 
           <!-- Pagination buttons -->
           <nav aria-label="Page navigation example" v-if="store.pagination.links">

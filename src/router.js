@@ -117,4 +117,14 @@ const router = createRouter({
     history: createWebHistory(),
     routes,
 })
+
+router.beforeEach((to,from,next)=>{
+    const isAuthenticated = !!localStorage.getItem('token');
+
+    if(to.meta.requiresAuth && !isAuthenticated){
+        next({name:'login'})
+    }else{
+        next()
+    }
+})
 export default router
