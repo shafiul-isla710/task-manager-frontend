@@ -115,7 +115,24 @@ onMounted(async ()=>{
                     </thead>
                     <tbody>
                     <tr v-if="groupMembers.length" v-for="(member,index) in groupMembers" :key="index">
-                      <td>image</td>
+                      <td>
+                        <template v-if="member.profile_image">
+                          <img
+                              :src="member.profile_image"
+                              alt="Profile"
+                              class="rounded-circle border shadow-sm"
+                              style="width: 40px; height: 40px; object-fit: cover;"
+                          />
+                        </template>
+                        <template v-else>
+                          <img
+                              src="@/assets/img/dummy.jpeg"
+                              alt="Profile"
+                              class="rounded-circle border shadow-sm"
+                              style="width: 40px; height: 40px; object-fit: cover;"
+                          />
+                        </template>
+                      </td>
                       <td>{{member.name}}</td>
                       <td>{{member.email}}</td>
                       <td>{{member.designation}}</td>

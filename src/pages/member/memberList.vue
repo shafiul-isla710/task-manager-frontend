@@ -4,7 +4,7 @@ import memberStore from '@/store/memberStore.js'
 
 const store = memberStore();
 
-const designation = ['viewer','UX Designer','Web Developer','Web Designer','Apps Developer']
+const designation = ['viewer','UI/UX Designer','Web Developer','Web Designer','Apps Developer']
 
 //pagination
 const goToPage = async (url) => {
@@ -63,7 +63,6 @@ onMounted(()=>{
               <select name="" @change="selectDesignation" id="" v-model="selected" class="form-control">
                 <option value="">Select..</option>
                 <option v-for="(item,index) in designation" :key="index" :value="item">{{item}}</option>
-                <option>UI/UX Developer</option>
               </select>
             </div>
           </div>
@@ -92,7 +91,7 @@ onMounted(()=>{
                 </template>
                 <template v-else>
                   <img
-                      src="@/assets/img/dummy.png"
+                      src="@/assets/img/dummy.jpeg"
                       alt="Profile"
                       class="rounded-circle border shadow-sm"
                       style="width: 40px; height: 40px; object-fit: cover;"

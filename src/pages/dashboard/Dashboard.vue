@@ -39,7 +39,6 @@ onMounted(()=>{
     <div class="container">
       <div class="row">
 
-        <p>{{member.count}}</p>
         <div class="col-lg-4 mb-5">
           <div @click.prevent="list('memberList')" class="card mini-stats-wid">
             <div class="card-body">

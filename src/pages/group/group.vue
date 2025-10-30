@@ -88,7 +88,7 @@ onMounted(() => {
 
               </td>
               <td class="text-center d-flex flex-row gap-3">
-                <router-link :to="{name:'groupDetails',params:{id:group.id}}" class="bg-secondary text-white p-2  border-0 rounded">Add Members</router-link>
+                <router-link :to="{name:'groupDetails',params:{id:group.id}}" class="bg-secondary text-white p-2  border-0 rounded">Details</router-link>
                 <router-link :to="{name:'editForm',params:{id:group.id}}" class="bg-success text-white p-2 border-0 rounded">Edit</router-link>
                 <button @click="groupDelete(group.id)" class="bg-danger text-white p-2 border-0 rounded">Delete</button>
               </td>

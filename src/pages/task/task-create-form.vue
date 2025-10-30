@@ -92,9 +92,12 @@ const createOrUpdate = async () => {
                 </textarea>
                 </div>
               </div>
+              <div class="d-flex flex-row align-items-center gap-5 mt-4">
+                <router-link :to="{name:'TaskList'}" class="btn w-16 mt-2 animated fadeInUp float-start btn-secondary">Back</router-link>
               <button @click.prevent="createOrUpdate" class="btn w-20 mt-2 animated fadeInUp float-start btn-primary">
                 {{isEdit?'Save Change':'Save'}}
               </button>
+              </div>
             </form>
           </div>
         </div>
