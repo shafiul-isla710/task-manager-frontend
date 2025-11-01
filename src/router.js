@@ -1,8 +1,11 @@
 import { createWebHistory, createRouter } from 'vue-router'
 
-import Register from "@/pages/register.vue";
+import Register from "@/pages/auth/register.vue";
+import sentOpt from "@/pages/auth/sent-otp-page.vue";
+import verifyOpt from "@/pages/auth/verify-otp-page.vue";
+import resetPassword from "@/pages/auth/reset-password.vue";
 import HomePage from "@/pages/HomePage.vue";
-import LoginPage from "@/pages/LoginPage.vue";
+import LoginPage from "@/pages/auth/LoginPage.vue";
 import MasterLayout from "@/layout/MasterLayout.vue";
 import Dashboard from "@/pages/dashboard/Dashboard.vue";
 import TaskList from "@/pages/task/TaskList.vue";
@@ -13,6 +16,7 @@ import groupDetails from "@/pages/group/GroupDetails.vue";
 import form from "@/pages/group/form.vue";
 import MemberList from "@/pages/member/memberList.vue";
 import MemberEditForm from "@/pages/member/memberEditForm.vue";
+
 
 const routes = [
     {
@@ -31,7 +35,23 @@ const routes = [
         component:LoginPage,
     },
     {
-        //Master layout
+        path: '/sent-otp',
+        name:'sent-otp',
+        component:sentOpt,
+    },
+    {
+        path: '/verify-otp',
+        name:'very-otp',
+        component:verifyOpt,
+    },
+    {
+        path: '/reset-password',
+        name:'set-password',
+        component:resetPassword,
+    },
+
+    //Master layout start
+    {
         path:'/',
         component: MasterLayout,
         children:[

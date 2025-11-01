@@ -102,11 +102,92 @@ const useStore  = defineStore("authStore", ()=>{
        }
     }
 
+    //Reset password endpoint
+    async function sentOpt(credential)
+    {
+        try{
+            const res = await axiosClient.post("auth/send-otp",credential)
+            cogoToast.success(res.data.message,{
+                position:"top-right",
+                size:"small",
+            })
+            return true
+        }
+        catch(error){
+            if(error.status === 422){
+                const errors = error.response.data.messages
+                console.log(errors)
+                return errors;
+            }
+            cogoToast.error('something went wrongsdfasf',{
+                position:"top-right",
+                size:"small",
+            })
+        }
+    }
+    async function verifyOtp(credential)
+    {
+        try{
+            const res = await axiosClient.post("auth/verify-otp",credential)
+            cogoToast.success(res.data.message,{
+                position:"top-right",
+                size:"small",
+            })
+            return true
+        }
+        catch(error){
+            if(error.status === 422){
+                const errorMsg = error.response.data.messages;
+                errorMsg.forEach((msg)=>{
+
+                    cogoToast.error((msg),{
+                        position:"top-right",
+                        size:"small",
+                    })
+                })
+            }
+            cogoToast.error('something went wrongsdfasf',{
+                position:"top-right",
+                size:"small",
+            })
+        }
+    }
+    async function resetPassword(credential)
+    {
+        try{
+            const res = await axiosClient.post("auth/reset-password",credential)
+            cogoToast.success(res.data.message,{
+                position:"top-right",
+                size:"small",
+            })
+            return true
+        }
+        catch(error){
+            if(error.status === 422){
+                const errorMsg = error.response.data.messages;
+                errorMsg.forEach((msg)=>{
+
+                    cogoToast.error((msg),{
+                        position:"top-right",
+                        size:"small",
+                    })
+                })
+            }
+            cogoToast.error('something went wrongsdfasf',{
+                position:"top-right",
+                size:"small",
+            })
+        }
+    }
+
     return{
         token,
         register,
         login,
         logout,
+        sentOpt,
+        verifyOtp,
+        resetPassword
     }
 })
 

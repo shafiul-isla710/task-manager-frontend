@@ -78,7 +78,6 @@ onMounted(() => {
                   <label>Designation</label>
                   <select class="form-select" v-model="selected" aria-label="Default select example" >
                       <option v-if="designation.length" v-for="(data,index) in designation" :key="index" :value="data">{{data}}</option>
-
                   </select>
                 </div>
               </div>

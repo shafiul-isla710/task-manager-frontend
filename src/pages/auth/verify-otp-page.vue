@@ -1,33 +1,29 @@
 <script setup>
-
+import Navbar from "@/pages/Navbar.vue";
 import {ref,computed} from "vue";
 import {useRouter} from "vue-router";
 import authStore from "@/store/authStore.js";
-import Navbar from "@/pages/Navbar.vue";
 
 const router = useRouter();
-const email = ref('')
-const password = ref('')
+const email = ref('');
+const otp = ref('');
 
-const useStore = authStore()
-
-//login button disabled
-const isFiled = computed(()=>{
-  return email.value.trim() !== '' && password.value.trim() !== ''
-})
-
-const login = async ()=>{
-  const success = await useStore.login({
-    "email": email.value,
-    "password": password.value
+const verifyOpt = async()=>{
+  const result = await authStore().verifyOtp({
+    email: email.value,
+    otp: otp.value,
   })
-  if(success === true ){
+  if(result === true){
     setTimeout(()=>{
-      router.push("/dashboard")
-    },2000)
+      router.push("/reset-password");
+    },1000)
   }
 }
 
+//Nest button enable function
+const isFiled = computed(()=>{
+  return email.value.trim() !=="" && otp.value.trim() !==""
+})
 </script>
 
 <template>
@@ -37,37 +33,33 @@ const login = async ()=>{
       <div class="col-md-7 col-lg-6 center-screen">
         <div class="card w-90 p-4">
           <div class="card-body">
-            <form @submit.prevent="login">
-              <h4>SIGN IN</h4>
+            <form >
+              <h4>Verify OTP</h4>
               <br />
               <input
-                  placeholder="User Email"
+                  placeholder="Enter Your Email"
                   class="form-control animated fadeInUp"
-                  type="email"
                   name="email"
                   v-model="email"
               />
               <br />
               <input
-                  placeholder="User Password"
+                  placeholder="Enter OTP"
                   class="form-control animated fadeInUp"
-                  type="password"
-                  name="password"
-                  v-model="password"
+                  type="text"
+                  min="6"
+                  name="otp"
+                  v-model="otp"
               />
               <br />
-              <button class="btn w-100 animated fadeInUp float-end btn-primary" :disabled="!isFiled">
+              <button @click.prevent="verifyOpt" class="btn w-100 animated fadeInUp float-end btn-primary" :disabled="!isFiled">
                 Next
               </button>
             </form>
             <hr />
             <div class="float-end mt-3">
               <span>
-                <RouterLink
-                    :to="{ name: 'register'}"
-                    class="text-center ms-3 h6 animated fadeInUp"
-                >Sign Up
-                </RouterLink>
+                <router-link :to="{name:'login'}" class="text-center ms-3 h6 animated fadeInUp">Back</router-link>
               </span>
             </div>
           </div>
