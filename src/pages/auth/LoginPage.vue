@@ -21,10 +21,20 @@ const login = async ()=>{
     "email": email.value,
     "password": password.value
   })
+
+  const user = JSON.parse(localStorage.getItem("user"));
+  console.log(user.type)
   if(success === true ){
-    setTimeout(()=>{
-      router.push("/dashboard")
-    },2000)
+    if(user.type === 'Admin'){
+      setTimeout(()=>{
+        router.push("/dashboard")
+      },2000)
+    }
+    else{
+      setTimeout(()=>{
+        router.push("/user-dashboard")
+      },2000)
+    }
   }
 }
 

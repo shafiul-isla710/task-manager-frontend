@@ -40,7 +40,7 @@ const isAdmin = ()=>{
                   class="icon-nav-img mb-2"
                   alt=""
               />
-              <h6>Admin</h6>
+              <h6>User</h6>
               <hr class="p-0" />
             </div>
             <a href="/profile" class="side-bar-item">
@@ -63,25 +63,25 @@ const isAdmin = ()=>{
 
   <!-- Sidebar -->
   <div class="side-nav-open">
-    <router-link :to="{name:'dashboard'}" class="side-bar-item mt-2 text-black">
-      <i class="bi bi-speedometer2 side-bar-item-icon"></i>
-      <span>Dashboard</span>
-    </router-link>
+<!--    <router-link :to="{name:'dashboard'}" class="side-bar-item mt-2 text-black">-->
+<!--      <i class="bi bi-speedometer2 side-bar-item-icon"></i>-->
+<!--      <span>Dashboard</span>-->
+<!--    </router-link>-->
 
-    <router-link :to="{name:'memberList'}" class="side-bar-item mt-2 text-black">
-      <i class="bi bi-speedometer2 side-bar-item-icon"></i>
-      <span>Members</span>
-    </router-link>
+<!--    <router-link :to="{name:'memberList'}" class="side-bar-item mt-2 text-black">-->
+<!--      <i class="bi bi-speedometer2 side-bar-item-icon"></i>-->
+<!--      <span>Members</span>-->
+<!--    </router-link>-->
 
-    <router-link :to="{name:'groups'}"  class="side-bar-item mt-2 text-black">
-      <i class="bi bi-list-ul side-bar-item-icon"></i>
-      <span>Groups</span>
-    </router-link>
+<!--    <router-link :to="{name:'groups'}"  class="side-bar-item mt-2 text-black">-->
+<!--      <i class="bi bi-list-ul side-bar-item-icon"></i>-->
+<!--      <span>Groups</span>-->
+<!--    </router-link>-->
 
-    <router-link :to="{name:'TaskList'}"  class="side-bar-item mt-2 text-black">
-      <i class="bi bi-pencil-square side-bar-item-icon"></i>
-      <span>Tasks</span>
-    </router-link>
+<!--    <router-link :to="{name:'TaskList'}"  class="side-bar-item mt-2 text-black">-->
+<!--      <i class="bi bi-pencil-square side-bar-item-icon"></i>-->
+<!--      <span>Tasks</span>-->
+<!--    </router-link>-->
 
     <a href="/Progress" class="side-bar-item mt-2 text-black">
       <i class="bi bi-hourglass-split side-bar-item-icon"></i>
