@@ -17,9 +17,10 @@ import form from "@/pages/group/form.vue";
 import MemberList from "@/pages/member/memberList.vue";
 import MemberEditForm from "@/pages/member/memberEditForm.vue";
 
+//User
 import userMasterLayout from "@/layout/userMasterLayout.vue";
 import UserDashboard from "@/pages/User/UserDashboard.vue";
-
+import Profile from "@/pages/User/profile.vue"
 
 const routes = [
     {
@@ -138,6 +139,12 @@ const routes = [
                 name: 'UserDashboard',
                 component: UserDashboard,
                 meta: { requiresAuth: true, role: 'User' },
+            },
+            {
+                path: '/profile',
+                name: 'profile',
+                component: Profile,
+                meta: { requiresAuth: true, role: 'User' },
             }
         ]
     }
@@ -157,12 +164,7 @@ router.beforeEach((to, from, next) => {
     if (to.meta.requiresAuth && !isAuthenticated) {
         return next({ name: 'login' });
     }
-    if (isAuthenticated && to.name === 'login') {
-        if (user?.type === 'Admin') return next({ name: 'dashboard' });
-        if (user?.type === 'User') return next({ name: 'UserDashboard' });
-    }
     if (to.meta.role && to.meta.role !== user?.type) {
-        // যদি user তার role অনুযায়ী না হয়
         if (user?.type === 'Admin') return next({ name: 'dashboard' });
         if (user?.type === 'User') return next({ name: 'UserDashboard' });
         return next({ name: 'HomePage' });
