@@ -16,9 +16,34 @@ const userProfile = defineStore("userStore",()=> {
             return false;
         }
     }
+    async function updateProfile(credentials){
+        try{
+            const res = await axiosClient.put('auth/profile/update',credentials,{
+                headers: {'content-type':'multipart/form-data'}
+            });
+            cogoToast.success(res.data.message,{
+                position:"top-right",
+                size:"small",
+            })
+            return true
+        }
+        catch(error){
+            if(error.status === 422){
+                cogoToast.error(error.response.data.messages,{
+                    position:"top-right",
+                    size:"small",
+                })
+            }else{
+                cogoToast.error('something went wrong');
+            }
+            return false
+        }
+    }
+
 
     return {
         getProfile,
+        updateProfile
     }
 })
 

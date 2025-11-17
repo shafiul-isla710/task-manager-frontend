@@ -1,14 +1,24 @@
 <script setup>
 import useStore from "@/store/authStore.js";
+import Swal from "sweetalert2";
+
 
 const user = JSON.parse(localStorage.getItem("user"));
 
-const isAdmin = ()=>{
-  if(user.type ==='Admin'){
-    return true;
+const logout = async()=>{
+  const result = await Swal.fire({
+    title: "Are you sure?",
+    text: "Do you really want to logout?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes,Logout"
+  })
+  if (result.isConfirmed){
+    useStore().logout()
   }
-  return false;
-};
+}
 
 </script>
 
@@ -27,61 +37,12 @@ const isAdmin = ()=>{
         />
       </a>
       <div class="d-flex align-items-center">
-<!--        <div class="user-dropdown">-->
-<!--          <img-->
-<!--              src="https://t3.ftcdn.net/jpg/02/00/90/24/360_F_200902415_G4eZ9Ok3Ypd4SZZKjc8nqJyFVp1eOD6V.jpg"-->
-<!--              alt="User"-->
-<!--              class="icon-nav-img"-->
-<!--          />-->
-<!--          <div class="user-dropdown-content p-3">-->
-<!--            <div class="text-center">-->
-<!--              <img-->
-<!--                  src="https://t3.ftcdn.net/jpg/02/00/90/24/360_F_200902415_G4eZ9Ok3Ypd4SZZKjc8nqJyFVp1eOD6V.jpg"-->
-<!--                  class="icon-nav-img mb-2"-->
-<!--                  alt=""-->
-<!--              />-->
-<!--              <h6>User</h6>-->
-<!--              <hr class="p-0" />-->
-<!--            </div>-->
-<!--            <a href="/profile" class="side-bar-item">-->
-<!--              <i class="bi bi-person side-bar-item-icon"></i>-->
-<!--              <span class="side-bar-item-caption">Profile</span>-->
-<!--            </a>-->
-<!--            <span-->
-<!--                class="side-bar-item"-->
-<!--                style="cursor: pointer"-->
-<!--                @click="useStore().logout()"-->
-<!--            >-->
-<!--              <i class="bi bi-box-arrow-right side-bar-item-icon"></i>-->
-<!--              <span class="side-bar-item-caption">Logout</span>-->
-<!--            </span>-->
-<!--          </div>-->
-<!--        </div>-->
       </div>
     </div>
   </nav>
 
   <!-- Sidebar -->
   <div class="side-nav-open">
-<!--    <router-link :to="{name:'dashboard'}" class="side-bar-item mt-2 text-black">-->
-<!--      <i class="bi bi-speedometer2 side-bar-item-icon"></i>-->
-<!--      <span>Dashboard</span>-->
-<!--    </router-link>-->
-
-<!--    <router-link :to="{name:'memberList'}" class="side-bar-item mt-2 text-black">-->
-<!--      <i class="bi bi-speedometer2 side-bar-item-icon"></i>-->
-<!--      <span>Members</span>-->
-<!--    </router-link>-->
-
-<!--    <router-link :to="{name:'groups'}"  class="side-bar-item mt-2 text-black">-->
-<!--      <i class="bi bi-list-ul side-bar-item-icon"></i>-->
-<!--      <span>Groups</span>-->
-<!--    </router-link>-->
-
-<!--    <router-link :to="{name:'TaskList'}"  class="side-bar-item mt-2 text-black">-->
-<!--      <i class="bi bi-pencil-square side-bar-item-icon"></i>-->
-<!--      <span>Tasks</span>-->
-<!--    </router-link>-->
 
     <a href="/Progress" class="side-bar-item mt-2 text-black">
       <i class="bi bi-hourglass-split side-bar-item-icon"></i>
@@ -97,12 +58,12 @@ const isAdmin = ()=>{
       <span>Group</span>
     </a>
 
-    <a href="/Canceled" class="side-bar-item mt-2 text-black">
+    <router-link :to="{name:'profile'}" class="side-bar-item mt-2 text-black">
       <i class="bi bi-x-octagon side-bar-item-icon"></i>
       <span>Profile</span>
-    </a>
+    </router-link>
 
-    <a href="/Canceled" class="side-bar-item mt-2 text-black">
+    <a @click="logout" class="side-bar-item mt-2 text-black">
       <i class="bi bi-x-octagon side-bar-item-icon"></i>
       <span>Logout</span>
     </a>

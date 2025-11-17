@@ -3,12 +3,6 @@ import useStore from "@/store/authStore.js";
 
 const user = JSON.parse(localStorage.getItem("user"));
 
-const isAdmin = ()=>{
-  if(user.type ==='Admin'){
-    return true;
-  }
-  return false;
-};
 
 </script>
 

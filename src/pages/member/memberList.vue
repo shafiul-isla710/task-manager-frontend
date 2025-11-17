@@ -44,11 +44,7 @@ onMounted(()=>{
               <h4>Member List</h4>
             </div>
           </div>
-          <!-- Loading spinner-->
-          <div v-if="store.loading" class="d-flex align-items-center">
-            <strong>Loading...</strong>
-            <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
-          </div>
+
 
           <!-- search input-->
           <div class="row mb-3">
@@ -68,7 +64,7 @@ onMounted(()=>{
           </div>
 
           <div class="table-responsive">
-            <table v-if="!store.loading" class="table table-hover align-middle text-center ">
+            <table  class="table table-hover align-middle text-center ">
               <thead class="table-light">
               <tr>
                 <th>Image</th>
@@ -81,22 +77,12 @@ onMounted(()=>{
               <tbody>
               <tr v-if="store.membersData.length" v-for="(member, index) in store.membersData" :key="index">
                 <td>
-                  <template v-if="member.profile_image">
-                    <img
-                        :src="member.profile_image"
-                        alt="Profile"
-                        class="rounded-circle border shadow-sm"
-                        style="width: 40px; height: 40px; object-fit: cover;"
-                    />
-                  </template>
-                  <template v-else>
                     <img
                         src="@/assets/img/dummy.jpeg"
                         alt="Profile"
                         class="rounded-circle border shadow-sm"
                         style="width: 40px; height: 40px; object-fit: cover;"
                     />
-                  </template>
                 </td>
                 <td>{{ member.name }}</td>
                 <td>{{ member.email }}</td>
