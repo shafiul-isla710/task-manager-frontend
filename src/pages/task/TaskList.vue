@@ -63,11 +63,6 @@ onMounted(() => {
             </div>
           </div>
 
-          <!-- Loading spinner-->
-          <div v-if="store.loading" class="d-flex align-items-center">
-            <strong>Loading...</strong>
-            <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
-          </div>
           <!-- search input-->
           <div class="row">
             <div class="col-md-3">
@@ -77,7 +72,7 @@ onMounted(() => {
               </div>
             </div>
           </div>
-          <table v-if="!store.loading" class="table table-striped">
+          <table class="table table-striped align-middle text-center">
             <thead>
             <tr>
               <th class="w-30">Title</th>
@@ -86,7 +81,7 @@ onMounted(() => {
             </tr>
             </thead>
             <tbody>
-              <tr v-for="(task,index) in store.task" :key="index">
+              <tr v-if="store.task.length" v-for="(task,index) in store.task" :key="index">
                 <td>{{ task.title }}</td>
                 <td>{{ task.description }}</td>
                 <td class="text-right d-flex flex-row gap-3">
@@ -94,6 +89,9 @@ onMounted(() => {
                   <router-link :to="{name:'TaskEdit',params:{id:task.id}}" class="bg-success text-white p-2 border-0 rounded">Edit</router-link>
                   <button @click.prevent="deleteTask(task.id)" class="bg-danger text-white p-2 border-0 rounded">Delete</button>
                 </td>
+              </tr>
+              <tr v-else>
+                <td colspan="5" >No Data found</td>
               </tr>
             </tbody>
           </table>
@@ -137,8 +135,6 @@ onMounted(() => {
               </li>
             </ul>
           </nav>
-
-
         </div>
       </div>
     </div>

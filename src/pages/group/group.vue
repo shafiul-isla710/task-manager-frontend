@@ -53,12 +53,6 @@ onMounted(() => {
               <router-link :to="{name:'createForm'}" class="btn btn-sm btn-primary">Add New</router-link>
             </div>
           </div>
-          <!-- Loading spinner-->
-          <div v-if="store.loading" class="d-flex align-items-center">
-            <strong>Loading...</strong>
-            <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
-          </div>
-
           <!--search-->
           <div class="row mb-3">
             <div class="col-md-3">
@@ -69,7 +63,7 @@ onMounted(() => {
             </div>
           </div>
 
-          <table v-if="!store.loading" class="table table-bordered table-striped">
+          <table class="table table-bordered table-striped align-middle text-center">
             <thead>
             <tr>
               <th class="w-30">Group Name</th>
@@ -79,20 +73,23 @@ onMounted(() => {
             </tr>
             </thead>
             <tbody>
-            <tr v-for="(group, index) in store.groups" :key="index">
-              <td>{{group.name}}</td>
-              <td>{{group.title}}</td>
-              <td>
-                <span class="badge bg-success" v-if="group.status === 1">Active</span>
-                <span class="badge bg-danger" v-else>Inactive</span>
+              <tr v-if="store.groups.length" v-for="(group, index) in store.groups" :key="index">
+                <td>{{group.name}}</td>
+                <td>{{group.title}}</td>
+                <td>
+                  <span class="badge bg-success" v-if="group.status === 1">Active</span>
+                  <span class="badge bg-danger" v-else>Inactive</span>
 
-              </td>
-              <td class="text-center d-flex flex-row gap-3">
-                <router-link :to="{name:'groupDetails',params:{id:group.id}}" class="bg-secondary text-white p-2  border-0 rounded">Details</router-link>
-                <router-link :to="{name:'editForm',params:{id:group.id}}" class="bg-success text-white p-2 border-0 rounded">Edit</router-link>
-                <button @click="groupDelete(group.id)" class="bg-danger text-white p-2 border-0 rounded">Delete</button>
-              </td>
-            </tr>
+                </td>
+                <td class="text-center d-flex flex-row gap-3">
+                  <router-link :to="{name:'groupDetails',params:{id:group.id}}" class="bg-secondary text-white p-2  border-0 rounded">Details</router-link>
+                  <router-link :to="{name:'editForm',params:{id:group.id}}" class="bg-success text-white p-2 border-0 rounded">Edit</router-link>
+                  <button @click="groupDelete(group.id)" class="bg-danger text-white p-2 border-0 rounded">Delete</button>
+                </td>
+              </tr>
+              <tr v-else>
+                <td colspan="5">No Data Found</td>
+              </tr>
             </tbody>
           </table>
 
